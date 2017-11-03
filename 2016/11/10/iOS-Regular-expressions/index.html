@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>iOS中正则表达式的运用 | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、什么是正则表达式正则表达式，又称正规表示法，是对字符串操作的一种逻辑公式。正则表达式可以检测给定的字符串是否符合我们定义的逻辑，也可以从字符串中获取我们想要的特定部分。它可以迅速地用极简单的方式达到字符串的复杂控制。 二、正则表达式的语法看一个过滤纯数字的例子123456- (BOOL)validateNumber:(NSString *) textString&amp;#123;    NSStri">
+<meta name="keywords" content="OC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS中正则表达式的运用">
+<meta property="og:url" content="lfsluoye.github.io/2016/11/10/iOS-Regular-expressions/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="一、什么是正则表达式正则表达式，又称正规表示法，是对字符串操作的一种逻辑公式。正则表达式可以检测给定的字符串是否符合我们定义的逻辑，也可以从字符串中获取我们想要的特定部分。它可以迅速地用极简单的方式达到字符串的复杂控制。 二、正则表达式的语法看一个过滤纯数字的例子123456- (BOOL)validateNumber:(NSString *) textString&amp;#123;    NSStri">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-06-21T16:29:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS中正则表达式的运用">
+<meta name="twitter:description" content="一、什么是正则表达式正则表达式，又称正规表示法，是对字符串操作的一种逻辑公式。正则表达式可以检测给定的字符串是否符合我们定义的逻辑，也可以从字符串中获取我们想要的特定部分。它可以迅速地用极简单的方式达到字符串的复杂控制。 二、正则表达式的语法看一个过滤纯数字的例子123456- (BOOL)validateNumber:(NSString *) textString&amp;#123;    NSStri">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-iOS-Regular-expressions" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS中正则表达式的运用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、什么是正则表达式"><a href="#一、什么是正则表达式" class="headerlink" title="一、什么是正则表达式"></a>一、什么是正则表达式</h3><p>正则表达式，又称正规表示法，是对字符串操作的一种逻辑公式。正则表达式可以检测给定的字符串是否符合我们定义的逻辑，也可以从字符串中获取我们想要的特定部分。它可以迅速地用极简单的方式达到字符串的复杂控制。</p>
+<h3 id="二、正则表达式的语法"><a href="#二、正则表达式的语法" class="headerlink" title="二、正则表达式的语法"></a>二、正则表达式的语法</h3><p><em>看一个过滤纯数字的例子</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (BOOL)validateNumber:(NSString *) textString</div><div class="line">&#123;</div><div class="line">    NSString* number=@&quot;^[0-9]+$&quot;;</div><div class="line">    NSPredicate *numberPre = [NSPredicate predicateWithFormat:@&quot;SELF MATCHES %@&quot;,number];</div><div class="line">    return [numberPre evaluateWithObject:textString];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中下述语句就是一个正则表达式</p>
+<blockquote>
+<p>@”^[0-9]+$”<br>它代表了字符串中只能包含&gt;=1个0-9的数字，语法是不是有一些怪异？</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>　　下面我们先撇开iOS中的正则表达式的语法，用通俗的正则表达式语法来为介绍一下。（iOS语法与通俗的正则表达式语法相同，不同在于对转义字符的处理上(语言类的都相同)）</p>
+<p>　　语法：</p>
+<p>　　首先，特殊符号’^’和’$’。他们的作用是分别指出一个字符串的开始和结束。eg：</p>
+<p>　　“^one”：表示所有以”one”开始的字符串（”one cat”，”one123″，·····）；</p>
+<p>　　类似于:- (BOOL)hasPrefix:(NSString *)aString;</p>
+<p>　　“a dog$”：表示所以以”a dog”结尾的字符串（”it is a dog”，·····）；</p>
+<p>　　类似于:- (BOOL)hasSuffix:(NSString *)aString;</p>
+<p>　　“^apple$”：表示开始和结尾都是”apple”的字符串，这个是唯一的~；</p>
+<p>　　“banana”：表示任何包含”banana”的字符串。</p>
+<p>　　类似于 iOS8的新方法- (BOOL)containsString:(NSString *)aString,搜索子串用的。</p>
+<p>　　‘*’，’+’和’?’这三个符号，表示一个或N个字符重复出现的次数。它们分别表示“没有或更多”（[0,+∞]取整），“一次或更多”（[1,+∞]取整），“没有或一次”（[0,1]取整）。下面是几个例子：</p>
+<p>　　“ab*”：表示一个字符串有一个a后面跟着零个或若干个b（”a”, “ab”, “abbb”,……）；</p>
+<p>　　“ab+”：表示一个字符串有一个a后面跟着至少一个b或者更多（ ”ab”, “abbb”,……）；</p>
+<p>　　“ab?”：表示一个字符串有一个a后面跟着零个或者一个b（ ”a”, “ab”）；</p>
+<p>　　“a?b+$”：表示在字符串的末尾有零个或一个a跟着一个或几个b（ ”b”, “ab”,”bb”,”abb”,……）。</p>
+<p>　　可以用大括号括起来（{}），表示一个重复的具体范围。例如</p>
+<p>　　“ab{4}”：表示一个字符串有一个a跟着4个b（”abbbb”）；</p>
+<p>　　“ab{1,}”：表示一个字符串有一个a跟着至少1个b（”ab”,”abb”,”abbb”,……)；</p>
+<p>　　“ab{3,4}”：表示一个字符串有一个a跟着3到4个b（”abbb”,”abbbb”)。</p>
+<p>　　那么，“*”可以用{0，}表示，“+”可以用{1，}表示，“?”可以用{0，1}表示</p>
+<p>　　注意：可以没有下限，但是不能没有上限！例如“ab{,5}”是错误的写法</p>
+<p>　　“ | ”表示“或”操作：</p>
+<p>　　“a|b”：表示一个字符串里有”a”或者”b”；</p>
+<p>　　“(a|bcd)ef”：表示”aef”或”bcdef”；</p>
+<p>　　“(a|b)*c”：表示一串”a””b”混合的字符串后面跟一个”c”；</p>
+<p>　　方括号”[ ]“表示在括号内的众多字符中，选择1-N个括号内的符合语法的字符作为结果，例如</p>
+<p>　　“[ab]“：表示一个字符串有一个”a”或”b”（相当于”a|b”）；</p>
+<p>　　“[a-d]“：表示一个字符串包含小写的’a’到’d’中的一个（相当于”a|b|c|d”或者”[abcd]“）；</p>
+<p>　　“^[a-zA-Z]“：表示一个以字母开头的字符串；</p>
+<p>　　“[0-9]a”：表示a前有一位的数字；</p>
+<p>　　“[a-zA-Z0-9]$”：表示一个字符串以一个字母或数字结束。</p>
+<p>　　“.”匹配除“\r\n”之外的任何单个字符：</p>
+<p>　　“a.[a-z]“：表示一个字符串有一个”a”后面跟着一个任意字符和一个小写字母；</p>
+<p>　　“^.{5}$”：表示任意1个长度为5的字符串；</p>
+<p>　　“\num” 其中num是一个正整数。表示”\num”之前的字符出现相同的个数，例如</p>
+<p>　　“(.)\1″：表示两个连续的相同字符。</p>
+<p>　　“10{1,2}” : 表示数字1后面跟着1或者2个0 (“10″,”100″)。</p>
+<p>　　” 0{3,} ” 表示数字为至少3个连续的0 （“000”，“0000”，······）。</p>
+<p>　　在方括号里用’^’表示不希望出现的字符，’^’应在方括号里的第一位。</p>
+<p>　　“@[^a-zA-Z]4@”表示两个”@”中不应该出现字母）。</p>
+<p>　　常用的还有：</p>
+<p>　　“ \d ”匹配一个数字字符。等价于[0-9]。</p>
+<p>　　“ \D”匹配一个非数字字符。等价于[^0-9]。</p>
+<p>　　“ \w ”匹配包括下划线的任何单词字符。等价于“[A-Za-z0-9_]”。</p>
+<p>　　“ \W ”匹配任何非单词字符。等价于“[^A-Za-z0-9_]”。</p>
+<p>　　iOS中书写正则表达式，碰到转义字符，多加一个“\”,例如：</p>
+<p>　　全数字字符：@”^\d+$”
+　　</p>
+<h3 id="三、iOS中正则表达式"><a href="#三、iOS中正则表达式" class="headerlink" title="三、iOS中正则表达式"></a>三、iOS中正则表达式</h3><h4 id="1-正则表达式与NSPredicate连用，eg："><a href="#1-正则表达式与NSPredicate连用，eg：" class="headerlink" title="1.正则表达式与NSPredicate连用，eg："></a>1.正则表达式与NSPredicate连用，eg：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (BOOL)validateNumber:(NSString *) textString</div><div class="line">&#123;</div><div class="line">    NSString* number=@&quot;^[0-9]+$&quot;;</div><div class="line">    NSPredicate *numberPre = [NSPredicate predicateWithFormat:@&quot;SELF MATCHES %@&quot;,number];</div><div class="line">    return [numberPre evaluateWithObject:textString];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-NSString方法"><a href="#2-NSString方法" class="headerlink" title="2.NSString方法"></a>2.NSString方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">NSString *searchText = @&quot;rangeOfString&quot;;</div><div class="line">NSRange range = [searchText rangeOfString:@&quot;^[0-9]+$&quot; options:NSRegularExpressionSearch];</div><div class="line">if (range.location != NSNotFound) &#123;</div><div class="line">   NSLog(@&quot;range ：%@&quot;, [searchText substringWithRange:range]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-正则表达式类（NSRegularExpression）"><a href="#3-正则表达式类（NSRegularExpression）" class="headerlink" title="3.正则表达式类（NSRegularExpression）"></a>3.正则表达式类（NSRegularExpression）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">NSString *searchText = @&quot;you want to match&quot;;    </div><div class="line">NSError *error = NULL;</div><div class="line">NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@&quot;^[0-9]+$&quot; options:NSRegularExpressionCaseInsensitive error:&amp;error];</div><div class="line">NSTextCheckingResult *result = [regex firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];</div><div class="line">if (result) &#123;</div><div class="line">   NSLog(@&quot;%@&quot;, [searchText substringWithRange:result.range]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="四、常用的正则表达式"><a href="#四、常用的正则表达式" class="headerlink" title="四、常用的正则表达式"></a>四、常用的正则表达式</h4><p>以下红色字符串是常用的正则表达式（以下正则表达式来自百度百科）</p>
+<p>　　1.验证用户名和密码：”^[a-zA-Z]\w{5,15}$”</p>
+<p>　　2.验证电话号码：（”^(\d{3,4}-)\d{7,8}$”）</p>
+<p>　　eg：021-68686868  0511-6868686；</p>
+<p>　　3.验证手机号码：”^1[3|4|5|7|8][0-9]\d{8}$”；</p>
+<p>　　4.验证身份证号（15位或18位数字）：”\d{14}[[0-9],0-9xX]”；</p>
+<p>　　5.验证Email地址：(“^\w+([-+.]\w+)<em>@\w+([-.]\w+)</em>.\w+([-.]\w+)*$”)；</p>
+<p>　　6.只能输入由数字和26个英文字母组成的字符串：(“^[A-Za-z0-9]+$”) ;</p>
+<p>　　7.整数或者小数：^[0-9]+([.]{0,1}[0-9]+){0,1}$</p>
+<p>　　8.只能输入数字：”^[0-9]*$”。</p>
+<p>　　9.只能输入n位的数字：”^\d{n}$”。</p>
+<p>　　10.只能输入至少n位的数字：”^\d{n,}$”。</p>
+<p>　　11.只能输入m~n位的数字：”^\d{m,n}$”。</p>
+<p>　　12.只能输入零和非零开头的数字：”^(0|[1-9][0-9]*)$”。</p>
+<p>　　13.只能输入有两位小数的正实数：”^[0-9]+(.[0-9]{2})?$”。</p>
+<p>　　14.只能输入有1~3位小数的正实数：”^[0-9]+(.[0-9]{1,3})?$”。</p>
+<p>　　15.只能输入非零的正整数：”^+?[1-9][0-9]*$”。</p>
+<p>　　16.只能输入非零的负整数：”^-[1-9][]0-9″*$。</p>
+<p>　　17.只能输入长度为3的字符：”^.{3}$”。</p>
+<p>　　18.只能输入由26个英文字母组成的字符串：”^[A-Za-z]+$”。</p>
+<p>　　19.只能输入由26个大写英文字母组成的字符串：”^[A-Z]+$”。</p>
+<p>　　20.只能输入由26个小写英文字母组成的字符串：”^[a-z]+$”。</p>
+<p>　　21.验证是否含有^%&amp;’,;=?$\”等字符：”[^%&amp;’,;=?$\x22]+”。</p>
+<p>　　22.只能输入汉字：”^[\u4e00-\u9fa5]{0,}$”。</p>
+<p>　　23.验证URL：”^<a href="http://([\\w-]+\.)+[\\w-]+(/[\\w-./?%&amp;=]*)?$”。" target="_blank" rel="external">http://([\\w-]+\.)+[\\w-]+(/[\\w-./?%&amp;=]*)?$”。</a></p>
+<p>　　24.验证一年的12个月：”^(0?[1-9]|1[0-2])$”正确格式为：”01″～”09″和”10″～”12″。</p>
+<p>　　25.验证一个月的31天：”^((0?[1-9])|((1|2)[0-9])|30|31)$”正确格式为；”01″～”09″、”10″～”29″和“30”~“31”。</p>
+<p>　　26.获取日期正则表达式：\d{4}[年|-|.]\d{\1-\12}[月|-|.]\d{\1-\31}日?</p>
+<p>　　评注：可用来匹配大多数年月日信息。</p>
+<p>　　27.匹配双字节字符(包括汉字在内)：[^\x00-\xff]</p>
+<p>　　评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</p>
+<p>　　28.匹配空白行的正则表达式：\n\s*\r</p>
+<p>　　评注：可以用来删除空白行</p>
+<p>　　29.匹配HTML标记的正则表达式：&lt;(\S<em>?)[^&gt;]</em>&gt;.<em>?&lt;/&gt;|&lt;.</em>? /&gt;</p>
+<p>　　评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧无能为力</p>
+<p>　　30.匹配首尾空白字符的正则表达式：^\s<em>|\s</em>$</p>
+<p>　　评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</p>
+<p>　　31.匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*</p>
+<p>　　评注：网上流传的版本功能很有限，上面这个基本可以满足需求</p>
+<p>　　32.匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$</p>
+<p>　　评注：表单验证时很实用</p>
+<p>　　33.匹配腾讯QQ号：[1-9][0-9]{4,}</p>
+<p>　　评注：腾讯QQ号从10 000 开始</p>
+<p>　　34.匹配中国邮政编码：[1-9]\d{5}(?!\d)</p>
+<p>　　评注：中国邮政编码为6位数字</p>
+<p>　　35.匹配ip地址：((2[0-4]\d|25[0-5]|[01]?\d\d?).){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/10/iOS-Regular-expressions/" class="archive-article-date">
+  	<time datetime="2016-11-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-10</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/12/23/python-django/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          python-django
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/23/iOS-MarkCode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS不常用但是实用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

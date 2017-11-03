@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>iOS--runtime | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="iOS runtime理论篇前言终于抽出时间整理属于自己的runtime了先上图 runtime是什么对于初学者，runtime如尼斯湖水怪一样，只存在于传说中，对于开发者，runtime是做好iOS开发，或是深刻掌握Objective C所必需理解的东西。大公司面试都喜欢问：你对runtime熟悉吗？并不是runtime在开发中经常用到，我认为它是OC最核心的部分，只有掌握好它，你才能理解其底层">
+<meta name="keywords" content="OC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS--runtime">
+<meta property="og:url" content="lfsluoye.github.io/2016/01/21/iOS-runtime/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="iOS runtime理论篇前言终于抽出时间整理属于自己的runtime了先上图 runtime是什么对于初学者，runtime如尼斯湖水怪一样，只存在于传说中，对于开发者，runtime是做好iOS开发，或是深刻掌握Objective C所必需理解的东西。大公司面试都喜欢问：你对runtime熟悉吗？并不是runtime在开发中经常用到，我认为它是OC最核心的部分，只有掌握好它，你才能理解其底层">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/assets/blogImg/runtime学习图.png">
+<meta property="og:image" content="/assets/blogImg/消息转发流程图.png">
+<meta property="og:updated_time" content="2017-06-21T16:29:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS--runtime">
+<meta name="twitter:description" content="iOS runtime理论篇前言终于抽出时间整理属于自己的runtime了先上图 runtime是什么对于初学者，runtime如尼斯湖水怪一样，只存在于传说中，对于开发者，runtime是做好iOS开发，或是深刻掌握Objective C所必需理解的东西。大公司面试都喜欢问：你对runtime熟悉吗？并不是runtime在开发中经常用到，我认为它是OC最核心的部分，只有掌握好它，你才能理解其底层">
+<meta name="twitter:image" content="/assets/blogImg/runtime学习图.png">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-iOS-runtime" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS--runtime
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="iOS-runtime理论篇"><a href="#iOS-runtime理论篇" class="headerlink" title="iOS runtime理论篇"></a>iOS runtime理论篇</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>终于抽出时间整理属于自己的runtime了<br>先上图<br><img src="/assets/blogImg/runtime学习图.png" alt="runtime学习图"></p>
+<h3 id="runtime是什么"><a href="#runtime是什么" class="headerlink" title="runtime是什么"></a>runtime是什么</h3><p>对于初学者，runtime如尼斯湖水怪一样，只存在于传说中，对于开发者，runtime是做好iOS开发，或是深刻掌握Objective C所必需理解的东西。大公司面试都喜欢问：你对runtime熟悉吗？并不是runtime在开发中经常用到，我认为它是OC最核心的部分，只有掌握好它，你才能理解其底层的原理，而不是做一个只会造轮子的码农。<br><a id="more"></a></p>
+<h4 id="1-那么runtime到底是什么鬼？"><a href="#1-那么runtime到底是什么鬼？" class="headerlink" title="1. 那么runtime到底是什么鬼？"></a>1. 那么runtime到底是什么鬼？</h4><blockquote>
+<p>runtime是一个c和汇编写的动态库，它就像一个小小的系统，将OC和C紧密关联，这个系统主要做两件事 ：<br>1、封装C语言的结构体和函数，让开发者在运行时创建、检查或者修改类、对象和方法等等。<br>2、传递消息，找出方法的最终执行代码。</p>
+</blockquote>
+<p>听起来蛮抽象的，我们来点通俗的吧？没问题～～<br>我们先写一句OC的代码</p>
+<blockquote>
+<p>[zhangsan walkTheDog];</p>
+</blockquote>
+<p>那么在运行时runtime会将它转化成C语言的代码</p>
+<blockquote>
+<p>objc_msgSend(zhangsan, @selector(walkTheDog));</p>
+</blockquote>
+<p>这个方法就是发送消息的方法，类似这样的方法runtime提供了很多，比如：</p>
+<blockquote>
+<p>objc_property_t <em> class_copyPropertyList ( Class cls, unsigned int </em>outCount ); // 获取属性列表<br>Method <em> class_copyMethodList ( Class cls, unsigned int </em>outCount );            // 获取所有方法的数组<br>BOOL class_addMethod ( Class cls, SEL name, IMP imp, const char *types );       // 添加方法</p>
+</blockquote>
+<p>那么我们可以利用这些方法干点什么？</p>
+<blockquote>
+<p>1、遍历对象的属性<br>比如，看看zhangsan的有哪些属性（身高：180、年龄：18）</p>
+<p>2、动态添加/修改属性，动态添加/修改/替换方法<br>比如，修改zhangsan的身高为190、年龄为20，替换walkTheDog方法（变成walkTheBigDog），给他添加一个新方法（walkTheCat）等等</p>
+<p>3、动态创建类/对象/协议等等<br>比如，创建一个新的对象：lisi</p>
+<p>4、方法拦截调用<br>比如，给zhangsan发送一个walkTheDog消息，但是zhangsan不知道怎么walk啊（没实现该方法），那我们可以拦截下，给该方法动态添加一个实现，甚至可以讲该方法定向或者打包给lisi（其他对象），让lisi来walk。</p>
+</blockquote>
+<h4 id="2-方法调用流程"><a href="#2-方法调用流程" class="headerlink" title="2. 方法调用流程"></a>2. 方法调用流程</h4><p>通俗地讲，调用方法（包含实例方法和类方法）相当于給一个对象发送消息。</p>
+<blockquote>
+<p>所以，实际上，类本身也是一个对象（关于Class这一块就不再这里展开了）。<br>当我们调用一个方法时，是这样的：<br>Instance：调用实例方法时，会到对象所属的类的方法列表中查找。<br>Class：调用类方法时，会到类的metaClass的方法列表中查找。</p>
+</blockquote>
+<p>下面以实例对象调用方法[blackDog walk]为例描述方法调用的流程：</p>
+<blockquote>
+<p>1、编译器会把<code>[blackDog walk]</code>转化为<code>objc_msgSend(blackDog，SEL)</code>，SEL为@selector(walk)。</p>
+<p>2、Runtime会在blackDog对象所对应的Dog类的方法缓存列表里查找方法的SEL</p>
+<p>3、如果没有找到，则在Dog类的方法分发表查找方法的SEL。（类由对象isa指针指向，方法分发表即methodList）</p>
+<p>4、如果没有找到，则在其父类（设Dog类的父类为Animal类）的方法分发表里查找方法的SEL（父类由类的superClass指向）</p>
+<p>5、如果没有找到，则沿继承体系继续下去，最终到达NSObject类。</p>
+<p>6、如果在234的其中一步中找到，则定位了方法实现的入口，执行具体实现</p>
+<p>7、如果最后还是没有找到，会面临两种情况：<br>(1) 如果是使用［blackDog walk］的方式调用方法<br>(2) 使用［blackDog performSelector:@selector(walk)］的方式调用方法`<br>第一种情况编译器会报错，第二种需要到运行时才能确定对象能否接收指定的消息，这时候会进入消息转发的流程</p>
+</blockquote>
+<h4 id="3-消息转发流程"><a href="#3-消息转发流程" class="headerlink" title="3. 消息转发流程"></a>3. 消息转发流程</h4><blockquote>
+<ol>
+<li><p>动态方法解析<br>接收到未知消息时（假设blackDog的walk方法尚未实现），runtime会调用+resolveInstanceMethod:（实例方法）或者+resolveClassMethod:（类方法）</p>
+</li>
+<li><p>备用接收者<br>如果以上方法没有做处理，runtime会调用- (id)forwardingTargetForSelector:(SEL)aSelector方法。<br>如果该方法返回了一个非nil（也不能是self）的对象，而且该对象实现了这个方法，那么这个对象就成了消息的接收者，消息就被分发到该对象。<br>适用情况：通常在对象内部使用，让内部的另外一个对象处理消息，在外面看起来就像是该对象处理了消息。<br>比如：blackDog让女朋友whiteDog来接收这个消息</p>
+</li>
+<li><p>完整消息转发<br>在- (void)forwardInvocation:(NSInvocation *)anInvocation方法中选择转发消息的对象，其中anInvocation对象封装了未知消息的所有细节，并保留调用结果发送到原始调用者。<br>比如：blackDog将消息完整转发給主人dogOwner来处理</p>
+</li>
+</ol>
+</blockquote>
+<p><img src="/assets/blogImg/消息转发流程图.png" alt="消息转发流程图"></p>
+<h3 id="成员变量和属性"><a href="#成员变量和属性" class="headerlink" title="成员变量和属性"></a>成员变量和属性</h3><p>曾遇到这样一个问题：“你知道成员变量的本质是什么吗？”<br>立马懵逼了，成员变量的本质？成员变量就是成员变量啊，平时只管用，还有什么更深层的含义？本文着重介绍runtime中成员变量和属性的定义和使用。</p>
+<h4 id="1-成员变量"><a href="#1-成员变量" class="headerlink" title="1. 成员变量"></a>1. 成员变量</h4><h5 id="1-1-定义："><a href="#1-1-定义：" class="headerlink" title="1.1 定义："></a>1.1 定义：</h5><p>Ivar: 实例变量类型，是一个指向objc_ivar结构体的指针</p>
+<blockquote>
+<p>typedef struct objc_ivar *Ivar;</p>
+</blockquote>
+<h5 id="1-2-操作函数："><a href="#1-2-操作函数：" class="headerlink" title="1.2 操作函数："></a>1.2 操作函数：</h5><blockquote>
+<p>// 获取所有成员变量<br>class_copyIvarList</p>
+<p>// 获取成员变量名<br>ivar_getName</p>
+<p>// 获取成员变量类型编码<br>ivar_getTypeEncoding</p>
+<p>// 获取指定名称的成员变量<br>class_getInstanceVariable</p>
+<p>// 获取某个对象成员变量的值<br>object_getIvar</p>
+<p>// 设置某个对象成员变量的值<br>object_setIvar</p>
+</blockquote>
+<h5 id="1-3-使用实例："><a href="#1-3-使用实例：" class="headerlink" title="1.3 使用实例："></a>1.3 使用实例：</h5><p>Model的头文件声明如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@interface Model : NSObject &#123;</div><div class="line">        NSString * _str1;</div><div class="line">    &#125;</div><div class="line">    @property NSString * str2;</div><div class="line">    @property (nonatomic, copy) NSDictionary * dict1;</div><div class="line">    @end</div></pre></td></tr></table></figure></p>
+<p>获取其成员变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">unsigned int outCount = 0;</div><div class="line">    Ivar * ivars = class_copyIvarList([Model class], &amp;outCount);</div><div class="line">    for (unsigned int i = 0; i &lt; outCount; i ++) &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        const char * name = ivar_getName(ivar);</div><div class="line">        const char * type = ivar_getTypeEncoding(ivar);</div><div class="line">        NSLog(@&quot;类型为 %s 的 %s &quot;,type, name);</div><div class="line">    &#125;</div><div class="line">    free(ivars);</div></pre></td></tr></table></figure></p>
+<p>打印结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">runtimeIvar[602:16885] 类型为 @&quot;NSString&quot; 的 _str1 </div><div class="line">runtimeIvar[602:16885] 类型为 @&quot;NSString&quot; 的 _str2 </div><div class="line">runtimeIvar[602:16885] 类型为 @&quot;NSDictionary&quot; 的 _dict1</div></pre></td></tr></table></figure></p>
+<h4 id="2-属性"><a href="#2-属性" class="headerlink" title="2. 属性"></a>2. 属性</h4><h5 id="2-1-定义："><a href="#2-1-定义：" class="headerlink" title="2.1 定义："></a>2.1 定义：</h5><p>objc_property_t：声明的属性的类型，是一个指向objc_property结构体的指针</p>
+<blockquote>
+<p>typedef struct objc_property *objc_property_t;</p>
+</blockquote>
+<h5 id="2-2-操作函数"><a href="#2-2-操作函数" class="headerlink" title="2.2 操作函数"></a>2.2 操作函数</h5><blockquote>
+<p>// 获取所有属性<br>class_copyPropertyList<br>说明：使用class_copyPropertyList并不会获取无@property声明的成员变量</p>
+<p>// 获取属性名<br>property_getName</p>
+<p>// 获取属性特性描述字符串<br>property_getAttributes</p>
+<p>// 获取所有属性特性<br>property_copyAttributeList</p>
+<p>说明：<br>property_getAttributes函数返回objc_property_attribute_t结构体列表，objc_property_attribute_t结构体包含name和value，常用的属性如下：</p>
+<p>属性类型  name值：T  value：变化<br>编码类型  name值：C(copy) &amp;(strong) W(weak) 空(assign) 等 value：无<br>非/原子性 name值：空(atomic) N(Nonatomic)  value：无<br>变量名称  name值：V  value：变化</p>
+</blockquote>
+<p>使用property_getAttributes获得的描述是property_copyAttributeList能获取到的所有的name和value的总体描述，如 T@”NSDictionary”,C,N,V_dict1</p>
+<h5 id="2-3-使用实例："><a href="#2-3-使用实例：" class="headerlink" title="2.3 使用实例："></a>2.3 使用实例：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">unsigned int outCount = 0;</div><div class="line">    objc_property_t * properties = class_copyPropertyList([Model class], &amp;outCount);</div><div class="line">    for (unsigned int i = 0; i &lt; outCount; i ++) &#123;</div><div class="line">        objc_property_t property = properties[i];</div><div class="line">        //属性名</div><div class="line">        const char * name = property_getName(property);</div><div class="line">        //属性描述</div><div class="line">        const char * propertyAttr = property_getAttributes(property);</div><div class="line">        NSLog(@&quot;属性描述为 %s 的 %s &quot;, propertyAttr, name);</div><div class="line"></div><div class="line">        //属性的特性</div><div class="line">        unsigned int attrCount = 0;</div><div class="line">        objc_property_attribute_t * attrs = property_copyAttributeList(property, &amp;attrCount);</div><div class="line">        for (unsigned int j = 0; j &lt; attrCount; j ++) &#123;</div><div class="line">            objc_property_attribute_t attr = attrs[j];</div><div class="line">            const char * name = attr.name;</div><div class="line">            const char * value = attr.value;</div><div class="line">            NSLog(@&quot;属性的描述：%s 值：%s&quot;, name, value);</div><div class="line">        &#125;</div><div class="line">        free(attrs);</div><div class="line">        NSLog(@&quot;\n&quot;);</div><div class="line">    &#125;</div><div class="line">    free(properties);</div></pre></td></tr></table></figure>
+<p>打印结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">runtimeIvar[661:27041] 属性描述为 T@&quot;NSString&quot;,&amp;,V_str2 的 str2 </div><div class="line">runtimeIvar[661:27041] 属性的描述：T 值：@&quot;NSString&quot;</div><div class="line">runtimeIvar[661:27041] 属性的描述：&amp; 值：</div><div class="line">runtimeIvar[661:27041] 属性的描述：V 值：_str2</div><div class="line">runtimeIvar[661:27041] </div><div class="line">runtimeIvar[661:27041] 属性描述为 T@&quot;NSDictionary&quot;,C,N,V_dict1 的 dict1 </div><div class="line">runtimeIvar[661:27041] 属性的描述：T 值：@&quot;NSDictionary&quot;</div><div class="line">runtimeIvar[661:27041] 属性的描述：C 值：</div><div class="line">runtimeIvar[661:27041] 属性的描述：N 值：</div><div class="line">runtimeIvar[661:27041] 属性的描述：V 值：_dict1</div><div class="line">runtimeIvar[661:27041]</div></pre></td></tr></table></figure></p>
+<h2 id="runtime实战篇"><a href="#runtime实战篇" class="headerlink" title="runtime实战篇"></a>runtime实战篇</h2><h3 id="1-Json到Model的转化"><a href="#1-Json到Model的转化" class="headerlink" title="1. Json到Model的转化"></a>1. Json到Model的转化</h3><p>在开发中相信最常用的就是接口数据需要转化成Model了（当然如果你是直接从Dict取值的话。。。），很多开发者也都使用著名的第三方库如JsonModel、Mantle或MJExtension等，如果只用而不知其所以然，那真和“搬砖”没啥区别了，下面我们使用runtime去解析json来给Model赋值。</p>
+<p>原理描述：用runtime提供的函数遍历Model自身所有属性，如果属性在json中有对应的值，则将其赋值。<br>核心方法：在NSObject的分类中添加方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithDict:(NSDictionary *)dict &#123;</div><div class="line"></div><div class="line">    if (self = [self init]) &#123;</div><div class="line">        //(1)获取类的属性及属性对应的类型</div><div class="line">        NSMutableArray * keys = [NSMutableArray array];</div><div class="line">        NSMutableArray * attributes = [NSMutableArray array];</div><div class="line">        /*</div><div class="line">         * 例子</div><div class="line">         * name = value3 attribute = T@&quot;NSString&quot;,C,N,V_value3</div><div class="line">         * name = value4 attribute = T^i,N,V_value4</div><div class="line">         */</div><div class="line">        unsigned int outCount;</div><div class="line">        objc_property_t * properties = class_copyPropertyList([self class], &amp;outCount);</div><div class="line">        for (int i = 0; i &lt; outCount; i ++) &#123;</div><div class="line">            objc_property_t property = properties[i];</div><div class="line">            //通过property_getName函数获得属性的名字</div><div class="line">            NSString * propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">            [keys addObject:propertyName];</div><div class="line">            //通过property_getAttributes函数可以获得属性的名字和@encode编码</div><div class="line">            NSString * propertyAttribute = [NSString stringWithCString:property_getAttributes(property) encoding:NSUTF8StringEncoding];</div><div class="line">            [attributes addObject:propertyAttribute];</div><div class="line">        &#125;</div><div class="line">        //立即释放properties指向的内存</div><div class="line">        free(properties);</div><div class="line"></div><div class="line">        //(2)根据类型给属性赋值</div><div class="line">        for (NSString * key in keys) &#123;</div><div class="line">            if ([dict valueForKey:key] == nil) continue;</div><div class="line">            [self setValue:[dict valueForKey:key] forKey:key];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>读者可以进一步思考：<br>1、如何识别基本数据类型的属性并处理<br>2、空（nil，null）值的处理<br>3、json中嵌套json（Dict或Array）的处理<br>尝试解决以上问题，你也能写出属于自己的功能完备的Json转Model库。</p>
+<h3 id="2-快速归档"><a href="#2-快速归档" class="headerlink" title="2. 快速归档"></a>2. 快速归档</h3><p>有时候我们要对一些信息进行归档，如用户信息类UserInfo，这将需要重写initWithCoder和encodeWithCoder方法，并对每个属性进行encode和decode操作。那么问题来了：当属性只有几个的时候可以轻松写完，如果有几十个属性呢？那不得写到天荒地老？。。。</p>
+<p>原理描述：用runtime提供的函数遍历Model自身所有属性，并对属性进行encode和decode操作。<br>核心方法：在Model的基类中重写方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">- (id)initWithCoder:(NSCoder *)aDecoder &#123;</div><div class="line">    if (self = [super init]) &#123;</div><div class="line">        unsigned int outCount;</div><div class="line">        Ivar * ivars = class_copyIvarList([self class], &amp;outCount);</div><div class="line">        for (int i = 0; i &lt; outCount; i ++) &#123;</div><div class="line">            Ivar ivar = ivars[i];</div><div class="line">            NSString * key = [NSString stringWithUTF8String:ivar_getName(ivar)];</div><div class="line">            [self setValue:[aDecoder decodeObjectForKey:key] forKey:key];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)encodeWithCoder:(NSCoder *)aCoder &#123;</div><div class="line">    unsigned int outCount;</div><div class="line">    Ivar * ivars = class_copyIvarList([self class], &amp;outCount);</div><div class="line">    for (int i = 0; i &lt; outCount; i ++) &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        NSString * key = [NSString stringWithUTF8String:ivar_getName(ivar)];</div><div class="line">        [aCoder encodeObject:[self valueForKey:key] forKey:key];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="3-访问私有变量"><a href="#3-访问私有变量" class="headerlink" title="3. 访问私有变量"></a>3. 访问私有变量</h3><p>我们知道，OC中没有真正意义上的私有变量和方法，要让成员变量私有，要放在m文件中声明，不对外暴露。如果我们知道这个成员变量的名称，可以通过runtime获取成员变量，再通过getIvar来获取它的值。<br>方法：</p>
+<blockquote>
+<pre><code>Ivar ivar = class_getInstanceVariable([Model class], &quot;_str1&quot;);
+NSString * str1 = object_getIvar(model, ivar);
+</code></pre></blockquote>
+<h3 id="4-关联对象"><a href="#4-关联对象" class="headerlink" title="4. 关联对象"></a>4. 关联对象</h3><h5 id="4-1-怎样关联对象"><a href="#4-1-怎样关联对象" class="headerlink" title="4.1 怎样关联对象"></a>4.1 怎样关联对象</h5><p>runtime提供給我们的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//关联对象</div><div class="line">void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)</div><div class="line">//获取关联的对象</div><div class="line">id objc_getAssociatedObject(id object, const void *key)</div><div class="line">//移除关联的对象</div><div class="line">void objc_removeAssociatedObjects(id object)</div></pre></td></tr></table></figure></p>
+<p>变量说明</p>
+<blockquote>
+<p>id object：被关联的对象（如xiaoming）<br>const void *key：关联的key，要求唯一<br>id value：关联的对象（如dog）<br>objc_AssociationPolicy policy：内存管理的策略</p>
+</blockquote>
+<p>objc_AssociationPolicy policy的enum值有</p>
+<blockquote>
+<p>OBJC_ASSOCIATION_ASSIGN = 0,<br>OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1,<br>OBJC_ASSOCIATION_COPY_NONATOMIC = 3,<br>OBJC_ASSOCIATION_RETAIN = 01401,<br>OBJC_ASSOCIATION_COPY = 01403</p>
+</blockquote>
+<p>当对象被释放时，会根据这个策略来决定是否释放关联的对象，当策略是RETAIN/COPY时，会释放（release）关联的对象，当是ASSIGN，将不会释放。<br>值得注意的是，我们不需要主动调用removeAssociated来接触关联的对象，如果需要解除指定的对象，可以使用setAssociatedObject置nil来实现。</p>
+<h5 id="4-2-关联对象的应用"><a href="#4-2-关联对象的应用" class="headerlink" title="4.2 关联对象的应用"></a>4.2 关联对象的应用</h5><h5 id="1-添加公共属性"><a href="#1-添加公共属性" class="headerlink" title="1. 添加公共属性"></a>1. 添加公共属性</h5><p>这是最常用的一个模式，通常我们会在类声明里面添加属性，但是出于某些需求（如前言描述的情况），我们需要在分类里添加一个或多个属性的话，编译器就会报错，这个问题的解决方案就是使用runtime的关联对象。<br>应用举例：<br>我们需要自定义一个tabbar，并暴露公共的属性和方法。（读者们可以思考下使用继承和分类实现的优点和不足之处）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@interface UITabBarController (Custom)</div><div class="line"></div><div class="line">@property (nonatomic, strong) SUCustomTabbar * customTabbar;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#import &quot;UITabBarController+Custom.h&quot;</div><div class="line">#import &lt;objc/runtime.h&gt;</div><div class="line"></div><div class="line">@implementation UITabBarController (Custom)</div><div class="line"></div><div class="line">- (void)setCustomTabbar:(UIView *)customTabbar &#123;</div><div class="line">    //这里使用方法的指针地址作为唯一的key</div><div class="line">    objc_setAssociatedObject(self, @selector(customTabbar), customTabbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (UIView *)customTabbar &#123;</div><div class="line">    return objc_getAssociatedObject(self, @selector(customTabbar));</div><div class="line">&#125;</div><div class="line"></div><div class="line">//其他方法...</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这样，我们就可以像原生的tabbar一样使用自定义的tabbar：</p>
+<blockquote>
+<p>[self.tabBarController.customTabbar doSomgthig];</p>
+</blockquote>
+<h5 id="2-添加私有成员变量"><a href="#2-添加私有成员变量" class="headerlink" title="2. 添加私有成员变量"></a>2. 添加私有成员变量</h5><p>有时候，需要在分类中添加不想暴露在公共声明的成员变量。<br>应用举例：給按钮添加点击事件的回调<br><em>.h</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@interface UIButton (Callback)</div><div class="line"></div><div class="line">- (instancetype)initWithFrame:(CGRect)frame callback:(void (^)(UIButton *))callbackBlock;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p><em>.m</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">@interface UIButton ()</div><div class="line"></div><div class="line">@property (nonatomic, copy) void (^callbackBlock)(UIButton * button);</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation UIButton (Callback)</div><div class="line"></div><div class="line">- (void (^)(UIButton *))callbackBlock &#123;</div><div class="line">    return objc_getAssociatedObject(self, @selector(callbackBlock));</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setCallbackBlock:(void (^)(UIButton *))callbackBlock &#123;</div><div class="line">    objc_setAssociatedObject(self, @selector(callbackBlock), callbackBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)initWithFrame:(CGRect)frame callback:(void (^)(UIButton *))callbackBlock &#123;</div><div class="line"></div><div class="line">    if (self = [super initWithFrame:frame]) &#123;</div><div class="line">        self.callbackBlock = callbackBlock;</div><div class="line">        [self addTarget:self action:@selector(didClickAction:) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)didClickAction:(UIButton *)button &#123;</div><div class="line">    self.callbackBlock(button);</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<h3 id="5-Method-Swizzling"><a href="#5-Method-Swizzling" class="headerlink" title="5. Method Swizzling"></a>5. Method Swizzling</h3><blockquote>
+<p>method Swizzling原理<br>每个类都维护一个方法（Method）列表，Method则包含SEL和其对应IMP的信息，方法交换做的事情就是把SEL和IMP的对应关系断开，并和新的IMP生成对应关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">+ (void)load &#123;</div><div class="line"></div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line"></div><div class="line">        Class selfClass = object_getClass([self class]);</div><div class="line"></div><div class="line">        SEL oriSEL = @selector(imageNamed:);</div><div class="line">        Method oriMethod = class_getInstanceMethod(selfClass, oriSEL);</div><div class="line"></div><div class="line">        SEL cusSEL = @selector(myImageNamed:);</div><div class="line">        Method cusMethod = class_getInstanceMethod(selfClass, cusSEL);</div><div class="line"></div><div class="line">        BOOL addSucc = class_addMethod(selfClass, oriSEL, method_getImplementation(cusMethod), method_getTypeEncoding(cusMethod));</div><div class="line">        if (addSucc) &#123;</div><div class="line">            class_replaceMethod(selfClass, cusSEL, method_getImplementation(oriMethod), method_getTypeEncoding(oriMethod));</div><div class="line">        &#125;else &#123;</div><div class="line">            method_exchangeImplementations(oriMethod, cusMethod);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>另一种<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">#import</div><div class="line"></div><div class="line">@implementation UIViewController (Tracking)</div><div class="line"></div><div class="line">+ (void)load &#123;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        Class class = [self class];</div><div class="line"></div><div class="line">        SEL originalSelector = @selector(viewWillAppear:);</div><div class="line">        SEL swizzledSelector = @selector(xxx_viewWillAppear:);</div><div class="line"></div><div class="line">        Method originalMethod = class_getInstanceMethod(class, originalSelector);</div><div class="line">        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</div><div class="line"></div><div class="line">        BOOL didAddMethod =</div><div class="line">            class_addMethod(class,</div><div class="line">                originalSelector,</div><div class="line">                method_getImplementation(swizzledMethod),</div><div class="line">                method_getTypeEncoding(swizzledMethod));</div><div class="line"></div><div class="line">        if (didAddMethod) &#123;</div><div class="line">            class_replaceMethod(class,</div><div class="line">                swizzledSelector,</div><div class="line">                method_getImplementation(originalMethod),</div><div class="line">                method_getTypeEncoding(originalMethod));</div><div class="line">        &#125; else &#123;</div><div class="line">            method_exchangeImplementations(originalMethod, swizzledMethod);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark - Method Swizzling</div><div class="line"></div><div class="line">- (void)xxx_viewWillAppear:(BOOL)animated &#123;</div><div class="line">    [self xxx_viewWillAppear:animated];</div><div class="line">    NSLog(@&quot;viewWillAppear: %@&quot;, self);</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>简要说明一下以上代码的几个重点:</p>
+<ul>
+<li>通过在Category的+ (void)load方法中添加Method Swizzling的代码,在类初始加载时自动被调用,load方法按照父类到子类,类自身到Category的顺序被调用.</li>
+<li>在dispatch_once中执行Method Swizzling是一种防护措施,以保证代码块只会被执行一次并且线程安全,不过此处并不需要,因为当前Category中的load方法并不会被多次调用.</li>
+<li>尝试先调用class_addMethod方法,以保证即便originalSelector只在父类中实现,也能达到Method Swizzling的目的.</li>
+<li>xxx_viewWillAppear:方法中[self xxx_viewWillAppear:animated];代码并不会造成死循环,因为Method Swizzling之后, 调用xxx_viewWillAppear:实际执行的代码已经是原来viewWillAppear中的代码了.<br>其实以上的代码也可以简写为以下:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (void)load &#123;</div><div class="line">    Class class = [self class];</div><div class="line">    </div><div class="line">    SEL originalSelector = @selector(viewWillAppear:);</div><div class="line">    SEL swizzledSelector = @selector(xxx_viewWillAppear:);</div><div class="line">    Method originalMethod = class_getInstanceMethod(class, originalSelector);</div><div class="line">    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</div><div class="line">    if (!originalMethod || !swizzledMethod) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    IMP originalIMP = method_getImplementation(originalMethod);</div><div class="line">    IMP swizzledIMP = method_getImplementation(swizzledMethod);</div><div class="line">    const char *originalType = method_getTypeEncoding(originalMethod);</div><div class="line">    const char *swizzledType = method_getTypeEncoding(swizzledMethod);</div><div class="line">    </div><div class="line">    class_replaceMethod(class,originalSelector,swizzledIMP,swizzledType);</div><div class="line">    class_replaceMethod(class,swizzledSelector,originalIMP,originalType);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这是因为class_replaceMethod方法其实能够覆盖到class_addMethod和method_setImplementation两种场景, 对于第一个class_replaceMethod来说, 如果viewWillAppear:实现在父类, 则执行class_addMethod, 否则就执行method_setImplementation将原方法的IMP指定新的代码块; 而第二个class_replaceMethod完成的工作便只是将新方法的IMP指向原来的代码.</p>
+<p>除了以上的场景之外,其它场景下我们如何使用Method Swizzling呢?</p>
+<h5 id="1-在不同类之间实现Method-Swizzling"><a href="#1-在不同类之间实现Method-Swizzling" class="headerlink" title="1. 在不同类之间实现Method Swizzling"></a>1. 在不同类之间实现Method Swizzling</h5><p>上面示例是通过Category来新增一个方法然后实现Method Swizzling的, 但有一些场景可能并不适合使用Category(比如私有的类,未获取到该类的声明), 此时我们应该如何来做Method Swizzling呢?</p>
+<p>例如已知一个className为Car的类中有一个实例方法- (void)run:(double)speed, 目前需要Hook该方法对速度小于120才执行run的代码, 按照方法交换的流程, 代码应该是这样的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">#import </div><div class="line"></div><div class="line">@interface MyCar : NSObject</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation MyCar</div><div class="line"></div><div class="line">+ (void)load &#123;</div><div class="line">    Class originalClass = NSClassFromString(@&quot;Car&quot;);</div><div class="line">    Class swizzledClass = [self class];</div><div class="line">    SEL originalSelector = NSSelectorFromString(@&quot;run:&quot;);</div><div class="line">    SEL swizzledSelector = @selector(xxx_run:);</div><div class="line">    Method originalMethod = class_getInstanceMethod(originalClass, originalSelector);</div><div class="line">    Method swizzledMethod = class_getInstanceMethod(swizzledClass, swizzledSelector);</div><div class="line">    </div><div class="line">    // 向Car类中新添加一个xxx_run:的方法</div><div class="line">    BOOL registerMethod = class_addMethod(originalClass,</div><div class="line">                                          swizzledSelector,</div><div class="line">                                          method_getImplementation(swizzledMethod),</div><div class="line">                                          method_getTypeEncoding(swizzledMethod));</div><div class="line">    if (!registerMethod) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 需要更新swizzledMethod变量,获取当前Car类中xxx_run:的Method指针</div><div class="line">    swizzledMethod = class_getInstanceMethod(originalClass, swizzledSelector);</div><div class="line">    if (!swizzledMethod) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 后续流程与之前的一致</div><div class="line">    BOOL didAddMethod = class_addMethod(originalClass,</div><div class="line">                                        originalSelector,</div><div class="line">                                        method_getImplementation(swizzledMethod),</div><div class="line">                                        method_getTypeEncoding(swizzledMethod));</div><div class="line">    if (didAddMethod) &#123;</div><div class="line">        class_replaceMethod(originalClass,</div><div class="line">                            swizzledSelector,</div><div class="line">                            method_getImplementation(originalMethod),</div><div class="line">                            method_getTypeEncoding(originalMethod));</div><div class="line">    &#125; else &#123;</div><div class="line">        method_exchangeImplementations(originalMethod, swizzledMethod);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)xxx_run:(double)speed &#123;</div><div class="line">    if (speed &lt; 120) &#123;</div><div class="line">        [self xxx_run:speed];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>与之前的流程相比,在前面添加了两个逻辑:</p>
+<p>利用runtime向目标类Car动态添加了一个新的方法,此时Car类与MyCar类一样具备了xxx_run:这个方法,MyCar的利用价值便结束了;<br>为了完成后续Car类中run:与xxx_run:的方法交换,此时需要更新swizzledMethod变量为Car中的xxx_run:方法所对应的Method.<br>以上所有的逻辑也可以合并简化为以下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">+ (void)load &#123;</div><div class="line">    Class originalClass = NSClassFromString(@&quot;Car&quot;);</div><div class="line">    Class swizzledClass = [self class];</div><div class="line">    SEL originalSelector = NSSelectorFromString(@&quot;run:&quot;);</div><div class="line">    SEL swizzledSelector = @selector(xxx_run:);</div><div class="line">    Method originalMethod = class_getInstanceMethod(originalClass, originalSelector);</div><div class="line">    Method swizzledMethod = class_getInstanceMethod(swizzledClass, swizzledSelector);</div><div class="line">    </div><div class="line">    IMP originalIMP = method_getImplementation(originalMethod);</div><div class="line">    IMP swizzledIMP = method_getImplementation(swizzledMethod);</div><div class="line">    const char *originalType = method_getTypeEncoding(originalMethod);</div><div class="line">    const char *swizzledType = method_getTypeEncoding(swizzledMethod);</div><div class="line">    </div><div class="line">    class_replaceMethod(originalClass,swizzledSelector,originalIMP,originalType);</div><div class="line">    class_replaceMethod(originalClass,originalSelector,swizzledIMP,swizzledType);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>简化后的代码便与之前使用Category的方式并没有什么差异, 这样代码就很容易覆盖到这两种场景了, 但我们需要明确此时class_replaceMethod所完成的工作却是不一样的.</p>
+<blockquote>
+<ul>
+<li>第一个class_replaceMethod与之前的逻辑一致, 当run:方法是实现在Car类或Car的父类, 分别执行method_setImplementation或class_addMethod;</li>
+<li>第二个class_replaceMethod则直接在Car类中注册了xxx_run:方法, 并且指定的IMP为当前run:方法的IMP;</li>
+</ul>
+</blockquote>
+<ol>
+<li>如何实现类方法的Method Swizzling</li>
+</ol>
+<p>以上的代码都是实现的对实例方法的交换, 那如何来实现对类方法的交换呢, 依旧直接贴代码吧:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">@interface NSDictionary (Test)</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation NSDictionary (Test)</div><div class="line"></div><div class="line">+ (void)load &#123;</div><div class="line">    Class cls = [self class];</div><div class="line">    SEL originalSelector = @selector(dictionary);</div><div class="line">    SEL swizzledSelector = @selector(xxx_dictionary);</div><div class="line">    </div><div class="line">    // 使用class_getClassMethod来获取类方法的Method</div><div class="line">    Method originalMethod = class_getClassMethod(cls, originalSelector);</div><div class="line">    Method swizzledMethod = class_getClassMethod(cls, swizzledSelector);</div><div class="line">    if (!originalMethod || !swizzledMethod) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    IMP originalIMP = method_getImplementation(originalMethod);</div><div class="line">    IMP swizzledIMP = method_getImplementation(swizzledMethod);</div><div class="line">    const char *originalType = method_getTypeEncoding(originalMethod);</div><div class="line">    const char *swizzledType = method_getTypeEncoding(swizzledMethod);</div><div class="line">    </div><div class="line">    // 类方法添加,需要将方法添加到MetaClass中</div><div class="line">    Class metaClass = objc_getMetaClass(class_getName(cls));</div><div class="line">    class_replaceMethod(metaClass,originalSelector,swizzledIMP,swizzledType);</div><div class="line">    class_replaceMethod(metaClass,swizzledSelector,originalIMP,originalType);</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (id)xxx_dictionary &#123;</div><div class="line">    id result = [self xxx_dictionary];</div><div class="line">    return result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>相比实例方法的Method Swizzling,流程有两点差异:</p>
+<blockquote>
+<ul>
+<li>获取Method的方法变更为class_getClassMethod(Class cls, SEL name),从函数命名便直观体现了和class_getInstanceMethod(Class cls, SEL name)的差别;</li>
+<li>对于类方法的动态添加,需要将方法添加到MetaClass中,因为实例方法记录在class的method-list中, 类方法是记录在meta-class中的method-list中的.</li>
+</ul>
+</blockquote>
+<h5 id="3-在类簇中如何实现Method-Swizzling"><a href="#3-在类簇中如何实现Method-Swizzling" class="headerlink" title="3. 在类簇中如何实现Method Swizzling"></a>3. 在类簇中如何实现Method Swizzling</h5><p>在上面的代码中我们实现了对NSDictionary中的+ (id)dictionary方法的交换,但如果我们用类似代码尝试对- (id)objectForKey:(id)key方法进行交换后, 你便会发现这似乎并没有什么用.</p>
+<p>这是为什么呢? 平常我们在Xcode调试时,在下方Debug区域左侧的Variables View中,常常会发现如<strong>NSArrayI或是</strong>NSCFConstantString这样的Class类型, 这便是在Foundation框架中被广泛使用的类簇, 详情请参看Apple文档class cluster的内容.</p>
+<p>所以针对类簇的Method Swizzling问题就转变为如何对这些类簇中的私有类做Method Swizzling, 在上面介绍的不同类之间做Method Swizzling便已经能解决该问题, 下面一个简单的示例通过交换NSMutableDictionary的setObject:forKey:方法,让调用这个方法时当参数object或key为空的不会抛出异常:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">@interface MySafeDictionary : NSObject</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation MySafeDictionary</div><div class="line"></div><div class="line">+ (void)load &#123;</div><div class="line">    Class originalClass = NSClassFromString(@&quot;__NSDictionaryM&quot;);</div><div class="line">    Class swizzledClass = [self class];</div><div class="line">    SEL originalSelector = @selector(setObject:forKey:);</div><div class="line">    SEL swizzledSelector = @selector(safe_setObject:forKey:);</div><div class="line">    Method originalMethod = class_getInstanceMethod(originalClass, originalSelector);</div><div class="line">    Method swizzledMethod = class_getInstanceMethod(swizzledClass, swizzledSelector);</div><div class="line">    </div><div class="line">    IMP originalIMP = method_getImplementation(originalMethod);</div><div class="line">    IMP swizzledIMP = method_getImplementation(swizzledMethod);</div><div class="line">    const char *originalType = method_getTypeEncoding(originalMethod);</div><div class="line">    const char *swizzledType = method_getTypeEncoding(swizzledMethod);</div><div class="line">    </div><div class="line">    class_replaceMethod(originalClass,swizzledSelector,originalIMP,originalType);</div><div class="line">    class_replaceMethod(originalClass,originalSelector,swizzledIMP,swizzledType);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)safe_setObject:(id)anObject forKey:(id)aKey &#123;</div><div class="line">    if (anObject &amp;&amp; aKey) &#123;</div><div class="line">        [self safe_setObject:anObject forKey:aKey];</div><div class="line">    &#125;</div><div class="line">    else if (aKey) &#123;</div><div class="line">        [(NSMutableDictionary *)self removeObjectForKey:aKey];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<h5 id="4-在Method-Swizzling之后如何恢复"><a href="#4-在Method-Swizzling之后如何恢复" class="headerlink" title="4. 在Method Swizzling之后如何恢复"></a>4. 在Method Swizzling之后如何恢复</h5><p>使用了Method Swizzling的各种姿势之后, 是否有考虑如何恢复到交换之前的现场呢?</p>
+<p>一种方案就是通过一个开关标识符, 如果需要从逻辑上面恢复到交换之前, 就设置一下这个标识符, 在实现中判定如果设定了该标识符, 逻辑就直接调用原方法的实现, 其它什么事儿也不干, 这是目前大多数代码的实现方法, 当然也是非常安全的方式, 只不过当交换方法过多时, 每一个交换的方法体中都需要增加这样的逻辑, 并且也需要维护大量这些标识符变量, 只是会觉得不够优雅, 所以此处也就不展开详细讨论了.</p>
+<p>那下面来讨论一下有没有更好的方案, 以上描述的Method Swizzling各种场景和处理的技巧, 但综合总结之后最核心的其实也只做了两件事情:</p>
+<blockquote>
+<ul>
+<li>class_addMethod 添加一个新的方法, 可能是把其它类中实现的方法添加到目标类中, 也可能是把父类实现的方法添加一份在子类中, 可能是添加的实例方法, 也可能是添加的类方法, 总之就是添加了方法.</li>
+<li>交换IMP 交换方法的实现IMP,完成这个步骤除了使用method_exchangeImplementations这个方法外, 也可以是调用了method_setImplementation方法来单独修改某个方法的IMP, 或者是采用在调用class_addMethod方法中设定了IMP而直接就完成了IMP的交换, 总之就是对IMP的交换.</li>
+</ul>
+</blockquote>
+<p>那我们来分别看一下这两件事情是否都还能恢复:</p>
+<blockquote>
+<ul>
+<li>对于class_addMethod, 我们首先想到的可能就是有没有对应的remove方法呢, 在Objective-C 1.0的时候有class_removeMethods这个方法, 不过在2.0的时候就已经被禁用了, 也就是苹果并不推荐我们这样做, 想想似乎也是挺有道理的, 本来runtime的接口看着就挺让人心惊胆战的, 又是添加又是删除总觉得会出岔子, 所以只能放弃remove的想法, 反正方法添加在那儿倒也没什么太大的影响.</li>
+<li>针对IMP的交换, 在Method Swizzling时做的交换动作, 如果需要恢复其实要做的动作还是交换回来罢了, 所以是可以做到的, 不过需要怎样做呢? 对于同一个类, 同一个方法, 可能会在不同的地方被多次做Method Swizzling, 所以要回退某一次的Method Swizzling, 我们就需要记录下来这一次交换的时候是哪两个IMP做了交换, 恢复的时候再换回来即可. 另一个问题是如果已经经过多次交换, 我们怎样找到这两个IMP所对应的Mehod呢, 还好runtime提供了一个class_copyMethodList方法, 可以直接取出Method列表, 然后我们就可以逐个遍历找到IMP所对应的Method了, 下面是对上一个示例添加恢复之后实现的代码逻辑:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line">#import </div><div class="line"></div><div class="line">@interface MySafeDictionary : NSObject</div><div class="line">@end</div><div class="line"></div><div class="line">static NSLock *kMySafeLock = nil;</div><div class="line">static IMP kMySafeOriginalIMP = NULL;</div><div class="line">static IMP kMySafeSwizzledIMP = NULL;</div><div class="line"></div><div class="line">@implementation MySafeDictionary</div><div class="line"></div><div class="line">+ (void)swizzlling &#123;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        kMySafeLock = [[NSLock alloc] init];</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    [kMySafeLock lock];</div><div class="line">    </div><div class="line">    do &#123;</div><div class="line">        if (kMySafeOriginalIMP || kMySafeSwizzledIMP) break;</div><div class="line">        </div><div class="line">        Class originalClass = NSClassFromString(@&quot;__NSDictionaryM&quot;);</div><div class="line">        if (!originalClass) break;</div><div class="line">        </div><div class="line">        Class swizzledClass = [self class];</div><div class="line">        SEL originalSelector = @selector(setObject:forKey:);</div><div class="line">        SEL swizzledSelector = @selector(safe_setObject:forKey:);</div><div class="line">        Method originalMethod = class_getInstanceMethod(originalClass, originalSelector);</div><div class="line">        Method swizzledMethod = class_getInstanceMethod(swizzledClass, swizzledSelector);</div><div class="line">        if (!originalMethod || !swizzledMethod) break;</div><div class="line">        </div><div class="line">        IMP originalIMP = method_getImplementation(originalMethod);</div><div class="line">        IMP swizzledIMP = method_getImplementation(swizzledMethod);</div><div class="line">        const char *originalType = method_getTypeEncoding(originalMethod);</div><div class="line">        const char *swizzledType = method_getTypeEncoding(swizzledMethod);</div><div class="line">        </div><div class="line">        kMySafeOriginalIMP = originalIMP;</div><div class="line">        kMySafeSwizzledIMP = swizzledIMP;</div><div class="line">        </div><div class="line">        class_replaceMethod(originalClass,swizzledSelector,originalIMP,originalType);</div><div class="line">        class_replaceMethod(originalClass,originalSelector,swizzledIMP,swizzledType);</div><div class="line">    &#125; while (NO);</div><div class="line">    </div><div class="line">    [kMySafeLock unlock];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (void)restore &#123;</div><div class="line">    [kMySafeLock lock];</div><div class="line">    </div><div class="line">    do &#123;</div><div class="line">        if (!kMySafeOriginalIMP || !kMySafeSwizzledIMP) break;</div><div class="line">        </div><div class="line">        Class originalClass = NSClassFromString(@&quot;__NSDictionaryM&quot;);</div><div class="line">        if (!originalClass) break;</div><div class="line">        </div><div class="line">        unsigned int outCount = 0;</div><div class="line">        Method *methodList = class_copyMethodList(originalClass, &amp;outCount);</div><div class="line">        for (unsigned int idx=0; idx &lt; outCount; idx++) &#123;</div><div class="line">            Method aMethod = methodList[idx];</div><div class="line">            IMP aIMP = method_getImplementation(aMethod);</div><div class="line">            if (aIMP == kMySafeSwizzledIMP) &#123;</div><div class="line">                method_setImplementation(aMethod, kMySafeOriginalIMP);</div><div class="line">            &#125;</div><div class="line">            else if (aIMP == kMySafeOriginalIMP) &#123;</div><div class="line">                method_setImplementation(aMethod, kMySafeSwizzledIMP);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        kMySafeOriginalIMP = NULL;</div><div class="line">        kMySafeSwizzledIMP = NULL;</div><div class="line">    &#125; while (NO);</div><div class="line">    </div><div class="line">    [kMySafeLock unlock];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)safe_setObject:(id)anObject forKey:(id)aKey &#123;</div><div class="line">    if (anObject &amp;&amp; aKey) &#123;</div><div class="line">        [self safe_setObject:anObject forKey:aKey];</div><div class="line">    &#125;</div><div class="line">    else if (aKey) &#123;</div><div class="line">        [(NSMutableDictionary *)self removeObjectForKey:aKey];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>注意 这段代码的Method Swizzling和恢复都需要主动调用, 并且相比上面其它的示例, 这段代码还添加如锁机制来加之保护. 这个示例是以不同的类来实现的Method Swizzling和恢复, 如果是Category或者是类方法, 根据之前的示例也需要做相应的调整.</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/01/21/iOS-runtime/" class="archive-article-date">
+  	<time datetime="2016-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-01-21</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/04/25/iOS-Sql/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS--SQLite同时删除多张表写法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/12/08/Swift-randomNum/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Swift中使用随机数</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

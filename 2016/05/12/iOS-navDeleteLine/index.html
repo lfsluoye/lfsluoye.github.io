@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>iOS去除导航栏和tabbar的1px横线 | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了要去除这1px的横线，首先应该知道它是什么，在Xcode的界面调试中可以看到，它其实是UIImageView来的">
+<meta name="keywords" content="OC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS去除导航栏和tabbar的1px横线">
+<meta property="og:url" content="lfsluoye.github.io/2016/05/12/iOS-navDeleteLine/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="1.在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了要去除这1px的横线，首先应该知道它是什么，在Xcode的界面调试中可以看到，它其实是UIImageView来的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/assets/blogImg/去除前导航栏.png">
+<meta property="og:image" content="/assets/blogImg/找到横线是什么了.png">
+<meta property="og:image" content="/assets/blogImg/完成之后的效果了.png">
+<meta property="og:updated_time" content="2017-06-21T16:29:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS去除导航栏和tabbar的1px横线">
+<meta name="twitter:description" content="1.在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了要去除这1px的横线，首先应该知道它是什么，在Xcode的界面调试中可以看到，它其实是UIImageView来的">
+<meta name="twitter:image" content="/assets/blogImg/去除前导航栏.png">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-iOS-navDeleteLine" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS去除导航栏和tabbar的1px横线
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了"><a href="#1-在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了" class="headerlink" title="1.在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了"></a>1.在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了</h4><p><img src="/assets/blogImg/去除前导航栏.png" alt="去除前导航栏"><br>要去除这1px的横线，首先应该知道它是什么，在Xcode的界面调试中可以看到，它其实是UIImageView来的<br><a id="more"></a><br><img src="/assets/blogImg/找到横线是什么了.png" alt="去除前导航栏"><br>其实这是navigationBar的shadowImage，所以只要设置它为空即可，但是设置它为空之前应该先设置它的背景也为空，全部代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];</div><div class="line">[self.navigationController.navigationBar setShadowImage:[UIImage new]];</div></pre></td></tr></table></figure></p>
+<p><img src="/assets/blogImg/完成之后的效果了.png" alt="去除前导航栏"><br>既然导航栏的那一横线能去除，那tabbar那一横线也是能去除的了（其实也是shadowImage来的）···</p>
+<h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>自定义UITabBarController</p>
+<h4 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[self.tabBarController.tabBar setBackgroundImage:[UIImage new]];</div><div class="line">[self.tabBarController.tabBar setShadowImage:[UIImage new]];</div></pre></td></tr></table></figure>
+<p>反之，如果我们想自定义那一横线的颜色也是可以的，只要设置它的shadowImage即可。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/05/12/iOS-navDeleteLine/" class="archive-article-date">
+  	<time datetime="2016-05-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-05-12</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/06/23/iOS-cleanTheCache/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS 清理缓存
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/28/iOS-WeiChatPay/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS微信支付</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

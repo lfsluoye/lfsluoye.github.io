@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>使用WKWebView替换UIWebView | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="开发App的过程中，常常会遇到在App内部加载网页，通常用UIWebView加载。这个自iOS2开始使用的网页加载器一直是开发的心病：加载速度慢，占用内存多，优化困难。如果加载网页多，还可能因为过量占用内存而给系统kill掉。各种优化的方法效果也不那么明显。  iOS8以后，苹果推出了新框架Wekkit，提供了替换UIWebView的组件WKWebView。各种UIWebView的问题没有了，速">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用WKWebView替换UIWebView">
+<meta property="og:url" content="lfsluoye.github.io/2015/11/18/iOS-WKWebView/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="开发App的过程中，常常会遇到在App内部加载网页，通常用UIWebView加载。这个自iOS2开始使用的网页加载器一直是开发的心病：加载速度慢，占用内存多，优化困难。如果加载网页多，还可能因为过量占用内存而给系统kill掉。各种优化的方法效果也不那么明显。  iOS8以后，苹果推出了新框架Wekkit，提供了替换UIWebView的组件WKWebView。各种UIWebView的问题没有了，速">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-06-21T16:29:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用WKWebView替换UIWebView">
+<meta name="twitter:description" content="开发App的过程中，常常会遇到在App内部加载网页，通常用UIWebView加载。这个自iOS2开始使用的网页加载器一直是开发的心病：加载速度慢，占用内存多，优化困难。如果加载网页多，还可能因为过量占用内存而给系统kill掉。各种优化的方法效果也不那么明显。  iOS8以后，苹果推出了新框架Wekkit，提供了替换UIWebView的组件WKWebView。各种UIWebView的问题没有了，速">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-iOS-WKWebView" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用WKWebView替换UIWebView
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>开发App的过程中，常常会遇到在App内部加载网页，通常用UIWebView加载。这个自iOS2开始使用的网页加载器一直是开发的心病：加载速度慢，占用内存多，优化困难。如果加载网页多，还可能因为过量占用内存而给系统kill掉。各种优化的方法效果也不那么明显。</p>
+</blockquote>
+<p>iOS8以后，苹果推出了新框架Wekkit，提供了替换UIWebView的组件WKWebView。各种UIWebView的问题没有了，速度更快了，占用内存少了，一句话，WKWebView是App内部加载网页的最佳选择！</p>
+<p>先看下 WKWebView的特性：</p>
+<blockquote>
+<ul>
+<li>在性能、稳定性、功能方面有很大提升（最直观的体现就是加载网页是占用的内存，模拟器加载百度与开源中国网站时，WKWebView占用23M，而UIWebView占用85M）</li>
+<li>允许JavaScript的Nitro库加载并使用（UIWebView中限制）</li>
+<li>支持了更多的HTML5特性</li>
+<li>高达60fps的滚动刷新率以及内置手势</li>
+<li>将UIWebViewDelegate与UIWebView重构成了14类与3个协议<a id="more"></a>
+</li>
+</ul>
+</blockquote>
+<p>然后从以下几个方面说下WKWebView的基本用法</p>
+<blockquote>
+<ul>
+<li>加载网页</li>
+<li>加载的状态回调</li>
+<li>新的WKUIDelegate协议</li>
+<li>动态加载并运行JS代码</li>
+<li>webView 执行JS代码</li>
+<li>JS调用App注册过的方法</li>
+</ul>
+</blockquote>
+<h3 id="一、加载网页"><a href="#一、加载网页" class="headerlink" title="一、加载网页"></a>一、加载网页</h3><p>加载网页或HTML代码的方式与UIWebView相同，代码示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds];</div><div class="line">[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@&quot;http://www.baidu.com&quot;]]];</div><div class="line">[self.view addSubview:webView];</div></pre></td></tr></table></figure></p>
+<h3 id="二、加载的状态回调-（WKNavigationDelegate）"><a href="#二、加载的状态回调-（WKNavigationDelegate）" class="headerlink" title="二、加载的状态回调 （WKNavigationDelegate）"></a>二、加载的状态回调 （WKNavigationDelegate）</h3><p>用来追踪加载过程（页面开始加载、加载完成、加载失败）的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 页面开始加载时调用</div><div class="line">- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation;</div><div class="line">// 当内容开始返回时调用</div><div class="line">- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation;</div><div class="line">// 页面加载完成之后调用</div><div class="line">- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation;</div><div class="line">// 页面加载失败时调用</div><div class="line">- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation;</div></pre></td></tr></table></figure></p>
+<p>页面跳转的代理方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 接收到服务器跳转请求之后调用</div><div class="line">- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation;</div><div class="line">// 在收到响应后，决定是否跳转</div><div class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler;</div><div class="line">// 在发送请求之前，决定是否跳转</div><div class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler;</div></pre></td></tr></table></figure></p>
+<h3 id="三、新的WKUIDelegate协议"><a href="#三、新的WKUIDelegate协议" class="headerlink" title="三、新的WKUIDelegate协议"></a>三、新的WKUIDelegate协议</h3><p>这个协议主要用于WKWebView处理web界面的三种提示框(警告框、确认框、输入框)，下面是警告框的例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> *  web界面中有弹出警告框时调用</div><div class="line"> *</div><div class="line"> *  @param webView           实现该代理的webview</div><div class="line"> *  @param message           警告框中的内容</div><div class="line"> *  @param frame             主窗口</div><div class="line"> *  @param completionHandler 警告框消失调用</div><div class="line"> */</div><div class="line">- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(void (^)())completionHandler;</div></pre></td></tr></table></figure></p>
+<h3 id="四、动态加载并运行JS代码"><a href="#四、动态加载并运行JS代码" class="headerlink" title="四、动态加载并运行JS代码"></a>四、动态加载并运行JS代码</h3><p>用于在客户端内部加入JS代码，并执行，示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 图片缩放的js代码</div><div class="line">NSString *js = @&quot;var count = document.images.length;for (var i = 0; i &lt; count; i++) &#123;var image = document.images[i];image.style.width=320;&#125;;window.alert(&apos;找到&apos; + count + &apos;张图&apos;);&quot;;</div><div class="line">// 根据JS字符串初始化WKUserScript对象</div><div class="line">WKUserScript *script = [[WKUserScript alloc] initWithSource:js injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];</div><div class="line">// 根据生成的WKUserScript对象，初始化WKWebViewConfiguration</div><div class="line">WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];</div><div class="line">[config.userContentController addUserScript:script];</div><div class="line">_webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];</div><div class="line">[_webView loadHTMLString:@&quot;&lt;head&gt;&lt;/head&gt;&lt;imgea src=&apos;http://www.nsu.edu.cn/v/2014v3/img/background/3.jpg&apos; /&gt;&quot;baseURL:nil];</div><div class="line">[self.view addSubview:_webView];</div></pre></td></tr></table></figure></p>
+<h3 id="五、webView-执行JS代码"><a href="#五、webView-执行JS代码" class="headerlink" title="五、webView 执行JS代码"></a>五、webView 执行JS代码</h3><p>用户调用用JS写过的代码，一般指服务端开发的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//javaScriptString是JS方法名，completionHandler是异步回调block</div><div class="line">[self.webView evaluateJavaScript:javaScriptString completionHandler:completionHandler];</div></pre></td></tr></table></figure></p>
+<h3 id="六、JS调用App注册过的方法"><a href="#六、JS调用App注册过的方法" class="headerlink" title="六、JS调用App注册过的方法"></a>六、JS调用App注册过的方法</h3><p>再WKWebView里面注册供JS调用的方法，是通过WKUserContentController类下面的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)addScriptMessageHandler:(id &lt;WKScriptMessageHandler&gt;)scriptMessageHandler name:(NSString *)name;</div></pre></td></tr></table></figure></p>
+<p>scriptMessageHandler是代理回调，JS调用name方法后，OC会调用scriptMessageHandler指定的对象。</p>
+<p>JS在调用OC注册方法的时候要用下面的方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">window.webkit.messageHandlers.&lt;name&gt;.postMessage(&lt;messageBody&gt;)</div></pre></td></tr></table></figure></p>
+<p>注意，name(方法名)是放在中间的，messageBody只能是一个对象，如果要传多个值，需要封装成数组，或者字典。整个示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//OC注册供JS调用的方法</div><div class="line">[[_webView configuration].userContentController addScriptMessageHandler:self name:@&quot;closeMe&quot;];</div><div class="line"></div><div class="line">//OC在JS调用方法做的处理</div><div class="line">- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message</div><div class="line">&#123;</div><div class="line">    NSLog(@&quot;JS 调用了 %@ 方法，传回参数 %@&quot;,message.name,message.body);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//JS调用</div><div class="line">    window.webkit.messageHandlers.closeMe.postMessage(null);</div></pre></td></tr></table></figure></p>
+<p>如果你在self的dealloc打个断点，会发现self没有释放！这显然是不行的！谷歌后看到一种解决方法，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">@interface WeakScriptMessageDelegate : NSObject&lt;WKScriptMessageHandler&gt;</div><div class="line"></div><div class="line">@property (nonatomic, weak) id&lt;WKScriptMessageHandler&gt; scriptDelegate;</div><div class="line"></div><div class="line">- (instancetype)initWithDelegate:(id&lt;WKScriptMessageHandler&gt;)scriptDelegate;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation WeakScriptMessageDelegate</div><div class="line"></div><div class="line">- (instancetype)initWithDelegate:(id&lt;WKScriptMessageHandler&gt;)scriptDelegate</div><div class="line">&#123;</div><div class="line">    self = [super init];</div><div class="line">    if (self) &#123;</div><div class="line">        _scriptDelegate = scriptDelegate;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message</div><div class="line">&#123;</div><div class="line">    [self.scriptDelegate userContentController:userContentController didReceiveScriptMessage:message];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>思路是另外创建一个代理对象，然后通过代理对象回调指定的self<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">WKUserContentController *userContentController = [[WKUserContentController alloc] init];    </div><div class="line">[userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:@&quot;closeMe&quot;];</div></pre></td></tr></table></figure></p>
+<p>运行代码，self释放了，WeakScriptMessageDelegate却没有释放啊啊啊！<br>还需在self的dealloc里面 添加这样一句代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[_webView configuration].userContentController removeScriptMessageHandlerForName:@&quot;closeMe&quot;];</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2015/11/18/iOS-WKWebView/" class="archive-article-date">
+  	<time datetime="2015-11-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-11-18</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift/">Swift</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2015/12/05/iOS-PictureCarousel/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS小Demo--图片无限轮播
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/06/08/iOS-Objective-CHybridSwift/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Objective-C 与 Swift 混用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

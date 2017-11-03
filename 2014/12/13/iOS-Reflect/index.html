@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>iOS--反射和反射工厂 | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="了解反射机制Objective-C语言中的OC对象，都继承自NSObject类。这个类为我们提供了一些基础的方法和协议，我们可以直接调用从这个类继承过来方法。当然，本篇文章中讲到的反射方法，就在NSObject和Foundation框架中。 反射机制涉及到的东西比较多，这篇文章只从OC层面来讲反射机制，不涉及runtime部分，以后会写文章来专门讲runtime的。">
+<meta name="keywords" content="OC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS--反射和反射工厂">
+<meta property="og:url" content="lfsluoye.github.io/2014/12/13/iOS-Reflect/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="了解反射机制Objective-C语言中的OC对象，都继承自NSObject类。这个类为我们提供了一些基础的方法和协议，我们可以直接调用从这个类继承过来方法。当然，本篇文章中讲到的反射方法，就在NSObject和Foundation框架中。 反射机制涉及到的东西比较多，这篇文章只从OC层面来讲反射机制，不涉及runtime部分，以后会写文章来专门讲runtime的。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-06-21T16:29:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS--反射和反射工厂">
+<meta name="twitter:description" content="了解反射机制Objective-C语言中的OC对象，都继承自NSObject类。这个类为我们提供了一些基础的方法和协议，我们可以直接调用从这个类继承过来方法。当然，本篇文章中讲到的反射方法，就在NSObject和Foundation框架中。 反射机制涉及到的东西比较多，这篇文章只从OC层面来讲反射机制，不涉及runtime部分，以后会写文章来专门讲runtime的。">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-iOS-Reflect" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS--反射和反射工厂
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="了解反射机制"><a href="#了解反射机制" class="headerlink" title="了解反射机制"></a>了解反射机制</h3><p>Objective-C语言中的OC对象，都继承自NSObject类。这个类为我们提供了一些基础的方法和协议，我们可以直接调用从这个类继承过来方法。当然，本篇文章中讲到的反射方法，就在NSObject和Foundation框架中。</p>
+<p>反射机制涉及到的东西比较多，这篇文章只从OC层面来讲反射机制，不涉及runtime部分，以后会写文章来专门讲runtime的。<br><a id="more"></a></p>
+<h4 id="获取Class对象"><a href="#获取Class对象" class="headerlink" title="获取Class对象"></a>获取Class对象</h4><p>Class对象其实本质上就是一个结构体，这个结构体中的成员变量还是自己，这种设计方式非常像链表的数据结构。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">typedef struct objc_class *Class;</div><div class="line">struct objc_class &#123;</div><div class="line">    Class isa  OBJC_ISA_AVAILABILITY;      </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以直接用一个实例对象或类对象，直接调用Class方法，都可以获取Class对象。我们调用下面三个方法，都可以获得Class对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 在实例方法中通过self调用class实例方法获取类对象</div><div class="line">[self class]</div><div class="line">// 通过ViewController类直接调用class类方法获取类对象</div><div class="line">[ViewController class]</div><div class="line">// 在类方法中使用类对象调用class方法获取类对象</div><div class="line">+ (Class)classMethod &#123;</div><div class="line">    return [self class];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过打印，我们发现调用这三个方法，获取到的类对象是同一个类对象，内存地址也是一样的。<br>这是因为这三个方法调用class方法，打印的都是类对象的isa指针。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSLog(@&quot;%p, %p, %p&quot;, [ViewController classMethod], [ViewController class], [self class]);</div><div class="line">打印结果：0x10c68e978, 0x10c68e978, 0x10c68e978</div></pre></td></tr></table></figure></p>
+<h4 id="反射方法"><a href="#反射方法" class="headerlink" title="反射方法"></a>反射方法</h4><p>系统Foundation框架为我们提供了一些方法反射的API，我们可以通过这些API执行将字符串转为SEL等操作。由于OC语言的动态性，这些操作都是发生在运行时的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// SEL和字符串转换</div><div class="line">FOUNDATION_EXPORT NSString *NSStringFromSelector(SEL aSelector);</div><div class="line">FOUNDATION_EXPORT SEL NSSelectorFromString(NSString *aSelectorName);</div><div class="line">// Class和字符串转换</div><div class="line">FOUNDATION_EXPORT NSString *NSStringFromClass(Class aClass);</div><div class="line">FOUNDATION_EXPORT Class __nullable NSClassFromString(NSString *aClassName);</div><div class="line">// Protocol和字符串转换</div><div class="line">FOUNDATION_EXPORT NSString *NSStringFromProtocol(Protocol *proto) NS_AVAILABLE(10_5, 2_0);</div><div class="line">FOUNDATION_EXPORT Protocol * __nullable NSProtocolFromString(NSString *namestr) NS_AVAILABLE(10_5, 2_0);</div></pre></td></tr></table></figure></p>
+<p>通过这些方法，我们可以在运行时选择创建那个实例，并动态选择调用哪个方法。这些操作甚至可以由服务器传回来的参数来控制，我们可以将服务器传回来的类名和方法名，实例为我们的对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 假设从服务器获取JSON串，通过这个JSON串获取需要创建的类为ViewController，并且调用这个类的getDataList方法。</div><div class="line">Class class = NSClassFromString(@&quot;ViewController&quot;);</div><div class="line">ViewController *vc = [[class alloc] init];</div><div class="line">SEL selector = NSSelectorFromString(@&quot;getDataList&quot;);</div><div class="line">[vc performSelector:selector];</div></pre></td></tr></table></figure></p>
+<h4 id="常用判断方法"><a href="#常用判断方法" class="headerlink" title="常用判断方法"></a>常用判断方法</h4><p>在NSObject类中为我们提供了一些基础方法，用来做一些判断操作，这些方法都是发生在运行时动态判断的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 当前对象是否这个类或其子类的实例</div><div class="line">- (BOOL)isKindOfClass:(Class)aClass;</div><div class="line">// 当前对象是否是这个类的实例</div><div class="line">- (BOOL)isMemberOfClass:(Class)aClass;</div><div class="line">// 当前对象是否遵守这个协议</div><div class="line">- (BOOL)conformsToProtocol:(Protocol *)aProtocol;</div><div class="line">// 当前对象是否实现这个方法</div><div class="line">- (BOOL)respondsToSelector:(SEL)aSelector;</div></pre></td></tr></table></figure></p>
+<p>下面的代码是判断当前对象是否是UIView对象或其子类，其它方法使用和下面类似。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if ([self isKindOfClass:NSClassFromString(@&quot;UIView&quot;)]) &#123;</div><div class="line">    NSLog(@&quot;The Current Class is UIView Class&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="反射机制使用技巧"><a href="#反射机制使用技巧" class="headerlink" title="反射机制使用技巧"></a>反射机制使用技巧</h3><blockquote>
+<p>假设有一天公司产品要实现一个需求：根据后台推送过来的数据，进行动态页面跳转，跳转到页面后根据返回到数据执行对应的操作。</p>
+</blockquote>
+<p>遇到这样奇葩的需求，我们当然可以问产品都有哪些情况执行哪些方法，然后写一大堆if else判断或switch判断。<br>但是这种方法实现起来太low了，而且不够灵活，假设后续版本需求变了，还要往其他已有页面中跳转，这不就傻眼了吗….</p>
+<p>这种情况反射机制就派上用场了，我们可以用反射机制动态的创建类并执行方法。当然也可以通过runtime来实现这个功能，但是我们当前需求反射机制已经足够满足需求了，如果遇到更加复杂的需求可以考虑用runtime来实现。</p>
+<p>这时候就需要和后台配合了，我们首先需要和后台商量好返回的数据结构，以及数据格式、类型等，返回后我们按照和后台约定的格式，根据后台返回的信息，直接进行反射和调用即可。</p>
+<p>假设和后台约定格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@&#123;</div><div class="line">     // 类名</div><div class="line">     @&quot;className&quot; : @&quot;UserListViewController&quot;, </div><div class="line">     // 数据参数</div><div class="line">     @&quot;propertys&quot; : @&#123; @&quot;name&quot;: @&quot;liuxiaozhuang&quot;, </div><div class="line">                       @&quot;age&quot;: @3 &#125;,</div><div class="line">     // 调用方法名</div><div class="line">     @&quot;method&quot; : @&quot;refreshUserInformation&quot;</div><div class="line"> &#125;;</div></pre></td></tr></table></figure></p>
+<p>定义一个UserListViewController类，这个类用于测试，在实际使用中可能会有多个这样的控制器类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line">// 由于使用的KVC赋值，如果不想把这两个属性暴露出来，把这两个属性写在.m文件也可以</div><div class="line">@interface UserListViewController : UIViewController</div><div class="line">@property (nonatomic,strong) NSString *name;/*!&lt; 用户名 */</div><div class="line">@property (nonatomic,strong) NSNumber *age;/*!&lt; 用户年龄 */</div><div class="line">/** 使用反射机制反射为SEL后，调用的方法 */</div><div class="line">- (void)refreshUserInformation;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>下面通过反射机制简单实现了控制器跳转的方法，在实际使用中再根据业务需求进行修改即可。因为这篇文章主要是讲反射机制，所以没有使用runtime代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">// 简单封装的页面跳转方法，只是做演示，代码都是没问题的，使用时可以根据业务需求进行修改。</div><div class="line">- (void)remoteNotificationDictionary:(NSDictionary *)dict &#123;</div><div class="line">    // 根据字典字段反射出我们想要的类，并初始化控制器</div><div class="line">    Class class = NSClassFromString(dict[@&quot;className&quot;]);</div><div class="line">    UIViewController *vc = [[class alloc] init];</div><div class="line">    // 获取参数列表，使用枚举的方式，对控制器属性进行KVC赋值</div><div class="line">    NSDictionary *parameter = dict[@&quot;propertys&quot;];</div><div class="line">    [parameter enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) &#123;</div><div class="line">        // 在属性赋值时，做容错处理，防止因为后台数据导致的异常</div><div class="line">        if ([vc respondsToSelector:NSSelectorFromString(key)]) &#123;</div><div class="line">            [vc setValue:obj forKey:key];</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">    [self.navigationController pushViewController:vc animated:YES];</div><div class="line">    // 从字典中获取方法名，并调用对应的方法</div><div class="line">    SEL selector = NSSelectorFromString(dict[@&quot;method&quot;]);</div><div class="line">    [vc performSelector:selector];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2014/12/13/iOS-Reflect/" class="archive-article-date">
+  	<time datetime="2014-12-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2014-12-13</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2015/01/19/iOS-customControl-ios/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS开发-自定义控件的方式及注意
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/08/01/suibi/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">写给自己的话</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

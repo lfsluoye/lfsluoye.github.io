@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>iOS开发-自定义控件的方式及注意 | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. 使用纯代码的方式一般来说我们的自定义类继承自UIView，首先在initWithFrame:方法中将需要的子控件加入view中。注意，这里只是加入到view中，并没有设置各个子控件的尺寸。 为什么要在initWithFrame:方法而不是在init方法？ 因为使用纯代码的方式创建自定义类，在以后使用的时候可能使用init方法创建，也有可能使用initWithFrame:方法创建，但是无论哪种">
+<meta name="keywords" content="OC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发-自定义控件的方式及注意">
+<meta property="og:url" content="lfsluoye.github.io/2015/01/19/iOS-customControl-ios/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="1. 使用纯代码的方式一般来说我们的自定义类继承自UIView，首先在initWithFrame:方法中将需要的子控件加入view中。注意，这里只是加入到view中，并没有设置各个子控件的尺寸。 为什么要在initWithFrame:方法而不是在init方法？ 因为使用纯代码的方式创建自定义类，在以后使用的时候可能使用init方法创建，也有可能使用initWithFrame:方法创建，但是无论哪种">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-06-21T16:29:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发-自定义控件的方式及注意">
+<meta name="twitter:description" content="1. 使用纯代码的方式一般来说我们的自定义类继承自UIView，首先在initWithFrame:方法中将需要的子控件加入view中。注意，这里只是加入到view中，并没有设置各个子控件的尺寸。 为什么要在initWithFrame:方法而不是在init方法？ 因为使用纯代码的方式创建自定义类，在以后使用的时候可能使用init方法创建，也有可能使用initWithFrame:方法创建，但是无论哪种">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-iOS-customControl-ios" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS开发-自定义控件的方式及注意
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-使用纯代码的方式"><a href="#1-使用纯代码的方式" class="headerlink" title="1. 使用纯代码的方式"></a>1. 使用纯代码的方式</h4><p>一般来说我们的自定义类继承自UIView，首先在initWithFrame:方法中将需要的子控件加入view中。注意，这里只是加入到view中，并没有设置各个子控件的尺寸。</p>
+<p><strong>为什么要在initWithFrame:方法而不是在init方法？</strong></p>
+<p>因为使用纯代码的方式创建自定义类，在以后使用的时候可能使用init方法创建，也有可能使用initWithFrame:方法创建，但是无论哪种方式，最后都会调用到initWithFrame:方法。在这个方法中创建子控件，可以保证无论哪种方式都可以成功创建。<br><a id="more"></a><br><strong>为什么要在initWithFrame:方法里面只是将子控件加到view而不设置尺寸？</strong></p>
+<p>前面已经说过，两种方式最后都会调用到initWithFrame:方法。如果使用init方法创建，那么这个view的frame有可能是不确定的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">CYLView *view = [[CYLView alloc] init];</div><div class="line">view.frame = CGRectMake(0, 0, 100, 100);</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>如果是这种情况，那么在init方法中，frame是不确定的，此时如果在initWithFrame:方法中设置尺寸，那么各个子控件的尺寸都会是0，因为这个view的frame还没有设置。（可以看到是在发送完init消息才设置的）<br>在layoutSubviews方法中就可以达到这个目的。第一次view<strong>将要显示</strong>的时候会调用这个方法，之后当view的尺寸（不是位置）改变时，会调用这个方法</p>
+<p>所以正常的做法应该是在initWithFrame:方法中创建子控件，注意此时子控件有可能只是一个局部变量，所以想要在layoutSubviews访问到的话，一般需要创建这个子控件的对应属性来指向它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic, weak) UIButton *button; // 注意这里使用weak就可以，因为button已经被加入到self.view.subviews这个数组里。</div><div class="line">...</div><div class="line"></div><div class="line">- (instancetype)initWithFrame: (CGRect)frame</div><div class="line">&#123;</div><div class="line">if (self = [super initWithFrame: frame]) &#123;</div><div class="line">UIButton *button = ... // 创建一个button</div><div class="line">[button setTitle: ...] // 设置button的属性</div><div class="line">[self.view addSubview: button]; // 将button加到view中，并不设置尺寸</div><div class="line">self.button = button; //将self.button指向这个button保证在layoutSubviews中可以访问</div><div class="line"></div><div class="line">UILabel *label = ... // 其他的子控件同理</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样我们就可以在layoutSubviews中访问子控件，设置子控件的尺寸，因为此时view的frame已经确定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)layoutSubviews </div><div class="line">&#123;</div><div class="line">[super layoutSubviews]; // 注意，一定不要忘记调用父类的layoutSubviews方法！</div><div class="line"></div><div class="line">self.button.frame = ... // 设置button的frame</div><div class="line">self.label.frame = ...  // 设置label的frame</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>经过以上的步骤，就可以实现自定义控件。</p>
+<p><strong>同时，我们还希望可以给我们的自定义控件数据，让其显示</strong></p>
+<p>一般来说首先要将得到的数据转换成模型数据，然后给这个自定义控件传入模型数据让其显示。<br>所以在这个自定义控件的头文件，需要我们设置接口以得到别人传入的数据。比如当前我们有一个Book类，它有一个name属性用于显示名称，有一个like属性用于显示多少人喜欢。现在我们需要将Book的name显示到自定义类的label子控件上，将Book的like显示到自定义类的button子控件上。</p>
+<p>首先在自定义类的头文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">@property (nonatomic, strong) Book *book;</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>在这里我们接收一个book作为需要显示的数据。<br>然后在自定义的实现文件中重写book的setter方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)setBook: (Book *)book </div><div class="line">&#123;</div><div class="line">_book = book; // 注意在这个方法中，不写这句也是没有问题的，因为在下面的语句使用的是book而非self.book或_book，但是如果在其他的方法中也想要访问book这个属性，那么就需要写上，否则self.book或_book会一直是nil（因为出了这个方法的作用域，book就销毁了，如果再想访问需要有其他的引用指向它）。所以建议，要写上这句。</div><div class="line"></div><div class="line">[self.button setTitle: book.like forState...];</div><div class="line">self.label = book.name;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，当我们想要使用自定义类显示数据时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 在控制器类的某个方法中：</div><div class="line">Book *book = self.books[index]; // 这里指拿到books这个数据中的某个数据用于显示</div><div class="line">CYLView *view = [[CYLView alloc] initWithFrame: ...];</div><div class="line">[self.view addSubview: view]; // 将自定义类加到view中</div><div class="line">view.book = book; // 设置book的数据，此时会调用setter方法给各个控件设置数据</div></pre></td></tr></table></figure></p>
+<p>这样一来就实现自定义类显示数据的功能。而且将子控件封装到自定义中，控制器只需要创建自定义类和给它数据，而不需要担心这个类内部是怎么设计的，都有什么控件，数据是如何安排的，所以当需求改变时，我们的控制器有可能完全不用改动，只需改变自定义类的内部就可以。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h3><ol>
+<li><p>initWithFrame:中添加子控件。</p>
+</li>
+<li><p>layoutSubviews中设置子控件frame</p>
+</li>
+<li><p>对外设置数据接口，重写setter方法给子控件设置显示数据。</p>
+</li>
+<li><p>在view controller里面使用init/initWithFrame:方法创建自定义类，并且给自定义类的frame赋值。</p>
+</li>
+<li><p>对自定义类对外暴露的数据接口进行赋值即可。</p>
+</li>
+</ol>
+<h3 id="2-使用xib方式"><a href="#2-使用xib方式" class="headerlink" title="2. 使用xib方式"></a>2. 使用xib方式</h3><ol>
+<li><p>使用xib的方式可以省去initWithFrame:和layoutSubviews中添加子控件和设置子控件尺寸的步骤，还有在view controller里面设置view的frame，因为添加子控件和设置子控件的尺寸以及整个view的尺寸在xib中就已经完成。（注意整个view的位置还没有设置，需要在控制器里面设置。）</p>
+</li>
+<li><p>我们只需对外提供数据接口，重写setter方法就可以显示数据。</p>
+</li>
+<li><p>注意要将xib中的类设置为我们的自定义类，这样创建出来的才是自定义类，而不是默认的父类。</p>
+</li>
+<li><p>当然，用xib这种方式是需要加载xib文件的。加载xib文件有两种方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 第一种方法（较为常用）</div><div class="line">CYLView *view = [[[NSBundle mainBundle] loadNibNamed:@&quot;CYLView&quot; owner:nil options:nil] firstObject]; // CYLView代表CYLView.xib，代表CYLView这个类对应的xib文件。这个方法返回的是一个NSArray，我们取第一个Object或最后一个（因为这个数组只有一个CYLView没有其他对象）就是需要加载的CYLView。</div><div class="line"></div><div class="line">// 第二种方法</div><div class="line">UINib *nib = [UINib nibWithNibName:@&quot;CYLView&quot; bundle:nil];</div><div class="line">NSArray *objectArray = [nib instantiateWithOwner:nil options:nil];</div><div class="line">CYLView *view = [objectArray firstObject];</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>###总结：</p>
+<ol>
+<li><p>创建xib，在xib中拖入需要添加的控件并设置好尺寸。并且要将这个xib的Class设置为我们的自定义类。</p>
+</li>
+<li><p>通过IBOutlet的方式，将xib中的控件与自定义类进行关联。</p>
+</li>
+<li><p>对外设置数据接口，重写setter方法给子控件设置显示数据。</p>
+</li>
+<li><p>在view controller类里面加载xib文件就可以得到对应的类（这里不需要再设置自定义类的frame，因为xib已经有了整个view的大小。只需要设置位置。），接着就可以对类对外的数据接口赋值。</p>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3></li>
+<li><p>如果使用代码的方式创建控件，那么在创建时一定会调用initWithFrame:方法；如果使用xib/storyboard方式创建控件，那么在创建时一定会调用initWithCoder:方法。</p>
+</li>
+<li><p>在initWithCoder:里面访问属性，比如self.button，会发现它是nil的，因为此时自定义控件正在初始化，self.button可能还未赋值（self.button是一个IBOutlet，IBOutlet本质上就相当于Xcode找到这个对应的属性，然后UIButton button = … , [self.view addSubview: button]这种操作，而这一切的操作都是相当于在CYLView view = [[CYLView alloc] initWithCoder: nil]方法之后执行的。上面的代码就相当于用代码的方式实现Xcode在storyboard中加载CYLView），所以如果在这个方法中进行初始化操作是可能会失败的。</p>
+</li>
+</ol>
+<p><strong>所以建议在awakeFromNib方法中进行初始化的额外操作</strong>。因为awakeFromNib是在初始化完成后调用，所以在这个方法里面访问属性（IBOutlet）就可以保证不为nil。</p>
+<ol>
+<li>事实上使用xib创建自定义控件，我们可以将加载xib的过程封装到自定义的类中，只对外暴露一个初始化方法，这样外界就不知道内部是如何创建的自定义控件了。</li>
+</ol>
+<p>比如在CYLView.h中提供一个类工厂方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">+ (instancetype)viewWithBook: (Book *)book;</div><div class="line"></div><div class="line">然后在CYLView.m中实现这个方法：</div><div class="line"></div><div class="line">+ (instancetype)viewWithBook: (Book *)book</div><div class="line">&#123;</div><div class="line">CYLView *view = [[[NSBundle mainBundle] loadNibNamed: NSStringFromClass(self) owner: nil opetions: nil] firstObject];</div><div class="line">view.book = book;</div><div class="line">return view;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样外界只需用viewWithBook:方法传入一个book，就可以创建一个CYLView的对象，而具体是怎么创建的，只有CYLView才知道。</p>
+<ol>
+<li>如果我们想，无论是通过代码的方式，还是通过xib的方式，都会初始化一些值，那么我们可以将初始化的代码抽到一个方法里面，然后在initWithFrame:方法和awakeFromNib方法中分别调用这个方法。</li>
+</ol>
+<p>关于为什么是awakeFromNib前面已经说了：</p>
+<p>通过xib的方式创建的自定义控件，需要设置IBOutlet属性，虽然会调用initWithCoder:方法，但是调用这个的方法的时候IBOutlet属性还未设置好，所以在这个方法中访问属性将会是nil。而在awakeFromNib中，IBOutlet已经初始化完毕，所以在这个方法中初始化不会失败。</p>
+<p>如果通过initWithFrame:方法，说明是通过代码创建的自定义控件，它的属性并不是IBOutlet的，所以不存在未完成IBOutlet的属性未初始化完这种情况。所以在initWithFrame:方法中访问一些属性是没有问题的。但是应该注意，如果是通过init方法创建的自定义控件也会调用initWithFrame:方法，但是此时的self.frame是没有被赋值的（在掉用这个方法的时候并没有设置控件的大小），如果这种情况下使用self.frame是没有值的。注意这种情况。</p>
+<p><a href="http://www.jianshu.com/p/7e47da62899c" target="_blank" rel="external">原文链接</a></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2015/01/19/iOS-customControl-ios/" class="archive-article-date">
+  	<time datetime="2015-01-18T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-01-19</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2015/01/25/iOS-textViewAutolayoutHeight/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS-textView文本换行高度自动适应
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/12/13/iOS-Reflect/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS--反射和反射工厂</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

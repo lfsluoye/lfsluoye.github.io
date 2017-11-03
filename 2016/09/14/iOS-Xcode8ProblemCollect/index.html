@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Xcode8问题收集 | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="问题一 打开相册报错今天Xcode8 更新了,打开相册，在调用发生了崩溃现象，一开始以为是巧合，但尝试了第二次之后，似乎意识到确实出了问题，从而关注控制台，这个时候就注意到了这句Xcode给我们的忠告:123[access] This app has crashed because it attempted to access privacy-sensitive data without a us">
+<meta name="keywords" content="Xcode8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xcode8问题收集">
+<meta property="og:url" content="lfsluoye.github.io/2016/09/14/iOS-Xcode8ProblemCollect/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="问题一 打开相册报错今天Xcode8 更新了,打开相册，在调用发生了崩溃现象，一开始以为是巧合，但尝试了第二次之后，似乎意识到确实出了问题，从而关注控制台，这个时候就注意到了这句Xcode给我们的忠告:123[access] This app has crashed because it attempted to access privacy-sensitive data without a us">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/assets/blogImg/添加照片key值.png">
+<meta property="og:image" content="/assets/blogImg/关闭无用信息.png">
+<meta property="og:updated_time" content="2017-06-21T16:29:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Xcode8问题收集">
+<meta name="twitter:description" content="问题一 打开相册报错今天Xcode8 更新了,打开相册，在调用发生了崩溃现象，一开始以为是巧合，但尝试了第二次之后，似乎意识到确实出了问题，从而关注控制台，这个时候就注意到了这句Xcode给我们的忠告:123[access] This app has crashed because it attempted to access privacy-sensitive data without a us">
+<meta name="twitter:image" content="/assets/blogImg/添加照片key值.png">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-iOS-Xcode8ProblemCollect" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Xcode8问题收集
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="问题一-打开相册报错"><a href="#问题一-打开相册报错" class="headerlink" title="问题一 打开相册报错"></a>问题一 打开相册报错</h3><p>今天Xcode8 更新了,打开相册，在调用发生了崩溃现象，一开始以为是巧合，但尝试了第二次之后，似乎意识到确实出了问题，从而关注控制台，这个时候就注意到了这句Xcode给我们的忠告:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[access] </div><div class="line">This app has crashed because it attempted to access privacy-sensitive data without a usage description.  </div><div class="line">The app&apos;s Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data.</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>不难翻译，大体意思就是这个App缺少一个获取私有(敏感)数据的权限描述，需要我们在info.plist文件中必须含有一个名字叫做NSPhotoLibraryUsageDescription的值来解释为什么应用需要使用这个数据，没错，获取相册资源的键值就是<code>NSPhotoLibraryUsageDescription</code></p>
+<p>感觉它”友好”的提示之后，就去plist文件中添加了下面的键值:<br><img src="/assets/blogImg/添加照片key值.png" alt="在info.plist中添加key值"><br>这个时候再点击获取图片资源，就弹出了一个获取权限的问候，不会发生崩溃了</p>
+<p>通过类似事情，说明iOS10对用户的隐私又做了进一步加强，就好像当初iOS8对定位隐私进行加强一样，作为开发者的我们貌似也是应该时刻保持这种对新知识警觉性的。</p>
+<blockquote>
+<ul>
+<li>NSBluetoothPeripheralUsageDescription //访问蓝牙</li>
+<li>NSCalendarsUsageDescription //访问日历</li>
+<li>NSCameraUsageDescription //相机</li>
+<li>NSContactsUsageDescription //通讯录</li>
+<li>NSHealthShareUsageDescription // 访问健康分享</li>
+<li>NSHealthUpdateUsageDescription // 访问健康更新</li>
+<li>NSHomeKitUsageDescription //HomeKit</li>
+<li>NSLocationAlwaysUsageDescription // 始终访问位置</li>
+<li>NSLocationWhenInUseUsageDescription //在使用期间访问位置</li>
+<li>NSMicrophoneUsageDescription // 麦克风</li>
+<li>NSMotionUsageDescription // 访问运动与健身</li>
+<li>NSPhotoLibraryUsageDescription // 相册</li>
+<li>NSRemindersUsageDescription // 访问提醒事项</li>
+<li>NSSiriUsageDescription // Siri</li>
+<li>NSSpeechRecognitionUsageDescription //语音识别</li>
+<li>NSVideoSubscriberAccountUsageDescription // 视频这块的认证</li>
+<li>NSVoIPUsageDescription // VoIP通话</li>
+</ul>
+</blockquote>
+<h3 id="问题二-快捷键不灵"><a href="#问题二-快捷键不灵" class="headerlink" title="问题二 快捷键不灵"></a>问题二 快捷键不灵</h3><p>像我最常用的 注释 “Command” + “/“ 居然不管用啦<br><strong>启动终端输入下面这句话，然后重启电脑就好啦</strong></p>
+<blockquote>
+<p>~ sudo /usr/libexec/xpccachectl</p>
+</blockquote>
+<h3 id="问题三-模拟器的选项不见了"><a href="#问题三-模拟器的选项不见了" class="headerlink" title="问题三 模拟器的选项不见了"></a>问题三 模拟器的选项不见了</h3><p>很奇怪的感觉，公司的电脑更新没有出现这个问题，回来后个人电脑出现啦。<br>一个最直接的方法，手动添加。直接到 Windows –&gt; Devices, 看到左下角添加模拟器。</p>
+<h3 id="问题四-打印时出现一大堆信息"><a href="#问题四-打印时出现一大堆信息" class="headerlink" title="问题四 打印时出现一大堆信息"></a>问题四 打印时出现一大堆信息</h3><p>一堆很奇怪的信息，暂时也不知什么情况。<br><img src="/assets/blogImg/关闭无用信息.png" alt="关闭无用信息"><br>在 Edit Scheme 中 ，如上图设置 <code>OS_ACTIVITY_MODE : disable</code>, 然后就 OK 啦。</p>
+<h3 id="问题五-隐藏状态栏的功能坏掉了"><a href="#问题五-隐藏状态栏的功能坏掉了" class="headerlink" title="问题五 隐藏状态栏的功能坏掉了"></a>问题五 隐藏状态栏的功能坏掉了</h3><p>升级到 iOS 10.0后，在查看全屏图片的时候，需要在 Present 之前给要 present 的 view controller 设置 modalPresentationCapturesStatusBarAppearance = true。然后就好啦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">TestViewController *testVC = [[TestViewController alloc] init];</div><div class="line">testVC.modalPresentationCapturesStatusBarAppearance = true;</div><div class="line">[self presentViewController:testVC animated:YES completion:nil];</div></pre></td></tr></table></figure></p>
+<h3 id="问题六-解决xcode8中的xib冲突"><a href="#问题六-解决xcode8中的xib冲突" class="headerlink" title="问题六 解决xcode8中的xib冲突"></a>问题六 解决xcode8中的xib冲突</h3><p>最近xCode8 和 iOS10 相继出来，团队中有人使用xcode8 来开发工程；<br>他们提交代码后，我们发现使用xcode8 修改的xib文件，在xcode7，7.3.1上无法运行:</p>
+<p>解决方法如下：</p>
+<ol>
+<li>右键点击该xib文件，使用source code查看；</li>
+<li>在source code 中去掉下面这行代码：<br><code>&lt;capability name=&quot;documents saved in the Xcode 8 format&quot; minToolsVersion=&quot;8.0&quot;/&gt;</code></li>
+<li>clean 一下，即可成功运行。</li>
+</ol>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/09/14/iOS-Xcode8ProblemCollect/" class="archive-article-date">
+  	<time datetime="2016-09-13T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-14</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xcode8/">Xcode8</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/10/23/iOS-MarkCode/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS不常用但是实用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/23/iOS-addChildViewController/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS addChildViewController方法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

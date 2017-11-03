@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>iOS微信支付 | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.首先下载最新的微信支付的SDK包.下载地址,拖到你的工程文件中. 简要步骤如下:">
+<meta name="keywords" content="OC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS微信支付">
+<meta property="og:url" content="lfsluoye.github.io/2016/04/28/iOS-WeiChatPay/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="1.首先下载最新的微信支付的SDK包.下载地址,拖到你的工程文件中. 简要步骤如下:">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/assets/blogImg/APPID.png">
+<meta property="og:image" content="/assets/blogImg/APPID2.png">
+<meta property="og:image" content="/assets/blogImg/请求参数列表.png">
+<meta property="og:updated_time" content="2017-06-21T16:29:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS微信支付">
+<meta name="twitter:description" content="1.首先下载最新的微信支付的SDK包.下载地址,拖到你的工程文件中. 简要步骤如下:">
+<meta name="twitter:image" content="/assets/blogImg/APPID.png">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-iOS-WeiChatPay" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS微信支付
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.首先下载最新的微信支付的SDK包.<a href="https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=11_1" target="_blank" rel="external">下载地址</a>,拖到你的工程文件中.</p>
+<p>简要步骤如下:<br><a id="more"></a></p>
+<h4 id="1-配置APPID"><a href="#1-配置APPID" class="headerlink" title="1. 配置APPID"></a>1. 配置APPID</h4><p>APPID要在微信开放平台申请.(让公司去注册.)</p>
+<p>targets -&gt; info -&gt; URL Types<br><img src="/assets/blogImg/APPID.png" alt="配置APPID"><br>配置完是这样的</p>
+<blockquote>
+<p>identifier 要使用 “weixin”</p>
+</blockquote>
+<p><img src="/assets/blogImg/APPID2.png" alt="配置APPID2"></p>
+<h4 id="2-在appDelegate引入微信lib-和头文件"><a href="#2-在appDelegate引入微信lib-和头文件" class="headerlink" title="2. 在appDelegate引入微信lib,和头文件."></a>2. 在appDelegate引入微信lib,和头文件.</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#import &quot;WXApi.h&quot;</div><div class="line">#import &quot;WXApiManager.h&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</div><div class="line"></div><div class="line"></div><div class="line">    //向微信注册APPID</div><div class="line">    [WXApi registerApp:@&quot;wxb4ba3c02aa476ea1&quot; withDescription:@&quot;demo 2.0&quot;];</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-调起微信支付"><a href="#3-调起微信支付" class="headerlink" title="3. 调起微信支付"></a>3. 调起微信支付</h4><p>微信支付需第一次调通统一下单接口 prepayId,sign,nonceStr,timeStamp分别是微信预支付ID,签名,随机字符串,还有时间戳.</p>
+<blockquote>
+<p>建议 “统一下单”由服务器端调用,然后客户端调用 支付接口.<br>因为 客户端生成随机字符串,还有签名,终端ip等等在客户端做并不妥当,并且一些商品的描述信息,商户的订单号还是要从服务器那边获取.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">- (void)wxPay&#123;</div><div class="line"></div><div class="line">    NSString *res = [self jumpToBizPay];</div><div class="line">    if( ![@&quot;&quot; isEqual:res] )&#123;</div><div class="line">        UIAlertView *alter = [[UIAlertView alloc] initWithTitle:@&quot;支付失败&quot; message:res delegate:nil cancelButtonTitle:@&quot;OK&quot; otherButtonTitles:nil];</div><div class="line"></div><div class="line">        [alter show];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">- (NSString *)jumpToBizPay &#123;</div><div class="line"></div><div class="line">    //============================================================</div><div class="line">    // V3&amp;V4支付流程实现</div><div class="line">    // 注意:参数配置请查看服务器端Demo</div><div class="line">    // 更新时间：2015年11月20日</div><div class="line">    //============================================================</div><div class="line">//    self.wxPayURL = @&quot;http://wxpay.weixin.qq.com/pub_v2/app/app_pay.php?plat=ios&quot;;</div><div class="line">    //解析服务端返回json数据</div><div class="line">    NSError *error;</div><div class="line">    //加载一个NSURL对象</div><div class="line">    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.wxPayURL]];</div><div class="line">    //将请求的url数据放到NSData对象中</div><div class="line">    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];</div><div class="line">    if ( response != nil) &#123;</div><div class="line">        NSMutableDictionary *dict = NULL;</div><div class="line">        //IOS5自带解析类NSJSONSerialization从response中解析出数据放到字典中</div><div class="line">        dict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&amp;error];</div><div class="line">        NSLog(@&quot;url:%@&quot;,self.wxPayURL);</div><div class="line">        if(dict != nil)&#123;</div><div class="line">            NSMutableString *retcode = [dict objectForKey:@&quot;retcode&quot;];</div><div class="line">            if (retcode.intValue == 0)&#123;</div><div class="line">                NSMutableString *stamp  = [dict objectForKey:@&quot;timestamp&quot;];</div><div class="line"></div><div class="line">                //调起微信支付</div><div class="line">                PayReq* req             = [[PayReq alloc] init];</div><div class="line">                req.partnerId           = [dict objectForKey:@&quot;partnerid&quot;];</div><div class="line">                req.prepayId            = [dict objectForKey:@&quot;prepayid&quot;];</div><div class="line">                req.nonceStr            = [dict objectForKey:@&quot;noncestr&quot;];</div><div class="line">                req.timeStamp           = stamp.intValue;</div><div class="line">                req.package             = [dict objectForKey:@&quot;package&quot;];</div><div class="line">                req.sign                = [dict objectForKey:@&quot;sign&quot;];</div><div class="line">                [WXApi sendReq:req];</div><div class="line">                //日志输出</div><div class="line">                NSLog(@&quot;appid=%@\npartid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@&quot;,[dict objectForKey:@&quot;appid&quot;],req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );</div><div class="line">                return @&quot;&quot;;</div><div class="line">            &#125;else&#123;</div><div class="line">                return [dict objectForKey:@&quot;retmsg&quot;];</div><div class="line">            &#125;</div><div class="line">        &#125;else&#123;</div><div class="line">            return @&quot;服务器返回错误，未获取到json对象&quot;;</div><div class="line">        &#125;</div><div class="line">    &#125;else&#123;</div><div class="line">        return @&quot;服务器返回错误&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里注意: 一大堆代码都是为了获取 到这些参数.这里的代码是微信返回的参数,实际参数我们可以从公司服务器中请求接口获取.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">PayReq* req             = [[PayReq alloc] init];</div><div class="line">   req.partnerId           = [dict objectForKey:@&quot;partnerid&quot;];</div><div class="line">   req.prepayId            = [dict objectForKey:@&quot;prepayid&quot;];</div><div class="line">   req.nonceStr            = [dict objectForKey:@&quot;noncestr&quot;];</div><div class="line">   req.timeStamp           = stamp.intValue;</div><div class="line">   req.package             = [dict objectForKey:@&quot;package&quot;];</div><div class="line">   req.sign                = [dict objectForKey:@&quot;sign&quot;];</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>字段 package 暂时是固定的 @”Sign=WXPay”就行.partnerId 是微信支付分配的商户号 申请的时候就有的.固定即可</p>
+</blockquote>
+<p>获取完成之后调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[WXApi sendReq:req];</div></pre></td></tr></table></figure></p>
+<p>剩下的就只有支付结果的回调了.</p>
+<p>请求参数列表:<br><img src="/assets/blogImg/请求参数列表.png" alt="配置APPID2"></p>
+<h4 id="4-支付回调结果"><a href="#4-支付回调结果" class="headerlink" title="4. 支付回调结果"></a>4. 支付回调结果</h4><p>a.回到 appDelegate中<br>遵循代理</p>
+<pre><code>@interface AppDelegate () &lt;WXApiDelegate&gt;
+</code></pre><p>b.当调用微信支付返回的时候.我们做的就是要在</p>
+<pre><code>- (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+</code></pre><p>判断是否成功调起微信支付.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation&#123;</div><div class="line"></div><div class="line">    BOOL result = [WXApi handleOpenURL:url delegate:self]; //判断调起微信支付是否成功</div><div class="line">    if (result) &#123;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line">    return NO;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>c.实现代理方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> *  微信的回调. (代理方法.)</div><div class="line"> */</div><div class="line">-(void) onResp:(BaseResp*)resp&#123;</div><div class="line"></div><div class="line">    if([resp isKindOfClass:[SendMessageToWXResp class]])&#123;</div><div class="line">        strTitle = [NSString stringWithFormat:@&quot;发送媒体消息结果&quot;];</div><div class="line">    &#125;</div><div class="line">    if([resp isKindOfClass:[PayResp class]])&#123;</div><div class="line">        //支付返回结果，实际支付结果需要去微信服务器端查询</div><div class="line">        strTitle = [NSString stringWithFormat:@&quot;支付结果&quot;];</div><div class="line"></div><div class="line">        //控制器接收通知就OK!</div><div class="line">        switch (resp.errCode) &#123;</div><div class="line">            case WXSuccess:&#123;</div><div class="line">                strMsg = @&quot;支付结果：成功！&quot;;</div><div class="line">   //微信文档有提到 一定不能用客户端的返回值做标准,实际支付结果应该去服务器查询的结果为准.</div><div class="line"></div><div class="line">                [[NSNotificationCenter defaultCenter] postNotificationName:@&quot;WXPaySuccess&quot; object:@&quot;success&quot;];</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">            default:&#123;</div><div class="line">                NSLog(@&quot;错误，retcode = %d, retstr = %@&quot;, resp.errCode,resp.errStr);</div><div class="line">                //</div><div class="line">                [[NSNotificationCenter defaultCenter] postNotificationName:@&quot;WXPayFailed&quot; object:@&quot;fail&quot;];</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>支付回调结果,应该在去服务器查询.安全起见 结果一致,才显示支付成功! (有一些没说明清楚的麻烦指正.)<br>这里还是有一个坑的,微信会向服务器在固定的频率发送支付成功的回调,有可能 2s, 有可能3秒这样的.也就是说,支付成功之后回来的时候从服务器查询可能还残留着上一次的支付状态.(没有更新过来,需要缓几秒). 在这个频率之间去请求的话可能会出现结果不一致的情况.而且我觉得微信做的支付并不专业,用过其他几个支付平台的就知道,支付结果的回调的时候,会反回一些 有关的订单信息,或者订单状态等.以供查询,而微信只返回了一些状态码,如果还想查询其他信息话需要做另外的操作.</p>
+</blockquote>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/04/28/iOS-WeiChatPay/" class="archive-article-date">
+  	<time datetime="2016-04-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-04-28</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/05/12/iOS-navDeleteLine/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          iOS去除导航栏和tabbar的1px横线
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/25/iOS-Sql/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS--SQLite同时删除多张表写法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
