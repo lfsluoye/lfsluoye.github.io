@@ -4,18 +4,20 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Archives: 2016/5 | 李甫帅的博客</title>
+  <title>常用命令 | 李甫帅的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="14年开始从事ios开发,目前就职于北京建科研软件有限公司.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李甫帅的博客">
-<meta property="og:url" content="lfsluoye.github.io/archives/2016/05/index.html">
+  <meta name="description" content="允许任何来源sudo spctl –master-disable brew的命令行 软件的安装: brew install 软件的搜索: brew search 软件的信息: brew info 软件的卸载: brew uninstall  brew的扩充 brew install caskroom/cask/brew-cask 软件安装: brew cask install 软件卸载: brew">
+<meta name="keywords" content="命令行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用命令">
+<meta property="og:url" content="lfsluoye.github.io/2017/01/31/iOS-Command/index.html">
 <meta property="og:site_name" content="李甫帅的博客">
-<meta property="og:description" content="14年开始从事ios开发,目前就职于北京建科研软件有限公司.">
+<meta property="og:description" content="允许任何来源sudo spctl –master-disable brew的命令行 软件的安装: brew install 软件的搜索: brew search 软件的信息: brew info 软件的卸载: brew uninstall  brew的扩充 brew install caskroom/cask/brew-cask 软件安装: brew cask install 软件卸载: brew">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-16T12:51:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李甫帅的博客">
-<meta name="twitter:description" content="14年开始从事ios开发,目前就职于北京建科研软件有限公司.">
+<meta name="twitter:title" content="常用命令">
+<meta name="twitter:description" content="允许任何来源sudo spctl –master-disable brew的命令行 软件的安装: brew install 软件的搜索: brew search 软件的信息: brew info 软件的卸载: brew uninstall  brew的扩充 brew install caskroom/cask/brew-cask 软件安装: brew cask install 软件卸载: brew">
   
     <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
   
@@ -140,59 +142,161 @@
 </nav>
 
       <div class="body-wrap">
+        <article id="post-iOS-Command" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/12/iOS-navDeleteLine/" class="archive-article-date">
-  	<time datetime="2016-05-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-05-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/12/iOS-navDeleteLine/">iOS去除导航栏和tabbar的1px横线</a>
+    <h1 class="article-title" itemprop="name">
+      常用命令
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="允许任何来源"><a href="#允许任何来源" class="headerlink" title="允许任何来源"></a>允许任何来源</h3><p>sudo spctl –master-disable</p>
+<h3 id="brew的命令行"><a href="#brew的命令行" class="headerlink" title="brew的命令行"></a>brew的命令行</h3><ol>
+<li>软件的安装: brew install</li>
+<li>软件的搜索: brew search</li>
+<li>软件的信息: brew info</li>
+<li>软件的卸载: brew uninstall</li>
+</ol>
+<h3 id="brew的扩充"><a href="#brew的扩充" class="headerlink" title="brew的扩充"></a>brew的扩充</h3><ol>
+<li>brew install caskroom/cask/brew-cask</li>
+<li>软件安装: brew cask install</li>
+<li>软件卸载: brew cask uninstall</li>
+</ol>
+<h3 id="xcode"><a href="#xcode" class="headerlink" title="xcode"></a>xcode</h3><ol>
+<li>查看当前: xcode xcode-select –print-path</li>
+<li>切换xcode: sudo xcode-select –switch /Applications/Xcode.app/Contents/Developer</li>
+</ol>
+<h3 id="cocopods安装异常"><a href="#cocopods安装异常" class="headerlink" title="cocopods安装异常"></a>cocopods安装异常</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">pod repo remove master</div><div class="line">pod repo add master https://gitcafe.com/akuandev/Specs.git</div><div class="line">pod repo update</div><div class="line">git clone https://git.coding.net/CocoaPods/Specs.git ~/.cocoapods/repos/master</div></pre></td></tr></table></figure>
+<h3 id="cocopods-更新"><a href="#cocopods-更新" class="headerlink" title="cocopods 更新"></a>cocopods 更新</h3><blockquote>
+<p>pod update –verbose –no-repo-update</p>
+</blockquote>
+<h3 id="Alcatraz插件管理工具"><a href="#Alcatraz插件管理工具" class="headerlink" title="Alcatraz插件管理工具"></a>Alcatraz插件管理工具</h3><h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><blockquote>
+<p>curl -fsSL <a href="https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh" target="_blank" rel="external">https://raw.github.com/supermarin/Alcatraz/master/Scripts/install.sh</a> | sh</p>
+</blockquote>
+<h5 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h5><blockquote>
+<p>rm -rf ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/Alcatraz.xcplugin</p>
+</blockquote>
+<h5 id="删除所有通过Alcatraz安装的安装包"><a href="#删除所有通过Alcatraz安装的安装包" class="headerlink" title="删除所有通过Alcatraz安装的安装包"></a>删除所有通过Alcatraz安装的安装包</h5><blockquote>
+<p>rm -rf ~/Library/Application\ Support/Alcatraz/</p>
+</blockquote>
+<h3 id="git"><a href="#git" class="headerlink" title="git"></a>git</h3><p>查看状态</p>
+<blockquote>
+<p>git status</p>
+</blockquote>
+<p>查看分支</p>
+<blockquote>
+<p>git branch</p>
+</blockquote>
+<p>添加到仓库</p>
+<blockquote>
+<p>git add .</p>
+</blockquote>
+<p>提交到仓库</p>
+<blockquote>
+<p>git commit -m”提交说明”</p>
+</blockquote>
+<p>切换分支</p>
+<blockquote>
+<p>git checkout dev</p>
+</blockquote>
+<p>创建并且切换到分支</p>
+<blockquote>
+<p>git checkout -b dev</p>
+</blockquote>
+<p>查看远程tag 查看远程版本库</p>
+<blockquote>
+<p>git ls-remote -h -t</p>
+</blockquote>
+<p>删除分支</p>
+<blockquote>
+<p>git branch -d dev</p>
+</blockquote>
+<p>合并分支</p>
+<blockquote>
+<p>git merge –no-ff -m “merge with no-ff” dev</p>
+</blockquote>
+<p>放弃所有修改</p>
+<blockquote>
+<p>git clean -xdf</p>
+</blockquote>
+<p>推送tag</p>
+<blockquote>
+<p>git push origin [tagname]</p>
+</blockquote>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/01/31/iOS-Command/" class="archive-article-date">
+  	<time datetime="2017-01-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-01-31</time>
+</a>
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/命令行/">命令行</a></li></ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	<a class="article-category-link" href="/categories/Suibi/">Suibi</a>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/23/python-django/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python-django</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
 
 
       </div>
@@ -215,8 +319,8 @@
 		mathjax: false,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

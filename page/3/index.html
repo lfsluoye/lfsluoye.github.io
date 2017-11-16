@@ -142,6 +142,65 @@
       <div class="body-wrap">
         
   
+    <article id="post-iOS-customControl-ios" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/19/iOS-customControl-ios/">iOS开发-自定义控件的方式及注意</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-使用纯代码的方式"><a href="#1-使用纯代码的方式" class="headerlink" title="1. 使用纯代码的方式"></a>1. 使用纯代码的方式</h4><p>一般来说我们的自定义类继承自UIView，首先在initWithFrame:方法中将需要的子控件加入view中。注意，这里只是加入到view中，并没有设置各个子控件的尺寸。</p>
+<p><strong>为什么要在initWithFrame:方法而不是在init方法？</strong></p>
+<p>因为使用纯代码的方式创建自定义类，在以后使用的时候可能使用init方法创建，也有可能使用initWithFrame:方法创建，但是无论哪种方式，最后都会调用到initWithFrame:方法。在这个方法中创建子控件，可以保证无论哪种方式都可以成功创建。<br>
+        <p class="article-more-link">
+          <a  href="/2015/01/19/iOS-customControl-ios/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2015/01/19/iOS-customControl-ios/" class="archive-article-date">
+  	<time datetime="2015-01-18T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-01-19</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-iOS-Reflect" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -319,7 +378,7 @@
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     			</div>
     	</section>
     
