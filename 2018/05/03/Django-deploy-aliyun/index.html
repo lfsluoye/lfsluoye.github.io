@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>部署django在阿里云上的服务器 | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="centos7下部署Django（nginx+uwsgi+python3+django)系统版本centos7 python版本3.6.3 django版本1.11 uwsgi版本2.0.15 nginx版本1.13.10">
+<meta name="keywords" content="django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部署django在阿里云上的服务器">
+<meta property="og:url" content="lfsluoye.github.io/2018/05/03/Django-deploy-aliyun/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="centos7下部署Django（nginx+uwsgi+python3+django)系统版本centos7 python版本3.6.3 django版本1.11 uwsgi版本2.0.15 nginx版本1.13.10">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-06-05T06:56:19.555Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="部署django在阿里云上的服务器">
+<meta name="twitter:description" content="centos7下部署Django（nginx+uwsgi+python3+django)系统版本centos7 python版本3.6.3 django版本1.11 uwsgi版本2.0.15 nginx版本1.13.10">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-Django-deploy-aliyun" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      部署django在阿里云上的服务器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="centos7下部署Django（nginx-uwsgi-python3-django"><a href="#centos7下部署Django（nginx-uwsgi-python3-django" class="headerlink" title="centos7下部署Django（nginx+uwsgi+python3+django)"></a>centos7下部署Django（nginx+uwsgi+python3+django)</h2><p>系统版本<br>centos7</p>
+<p>python版本<br>3.6.3</p>
+<p>django版本<br>1.11</p>
+<p>uwsgi版本<br>2.0.15</p>
+<p>nginx版本<br>1.13.10<br><a id="more"></a></p>
+<h3 id="进入正题，一行命令，一行注释，使用root身份登录系统执行"><a href="#进入正题，一行命令，一行注释，使用root身份登录系统执行" class="headerlink" title="进入正题，一行命令，一行注释，使用root身份登录系统执行"></a>进入正题，一行命令，一行注释，使用root身份登录系统执行</h3><h4 id="1、安装各类基础模块"><a href="#1、安装各类基础模块" class="headerlink" title="1、安装各类基础模块"></a>1、安装各类基础模块</h4><blockquote>
+<p>yum gcc-c++</p>
+</blockquote>
+<p>（为centos系统增加编译功能）</p>
+<blockquote>
+<p>yum install wget openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel</p>
+</blockquote>
+<p>（安装这些模块都是为了成功编译安装python3，防止出现各种异常）</p>
+<blockquote>
+<p>yum install libxml*</p>
+</blockquote>
+<p>（安装这个模块是为了让uwsig支持使用“-x”选项，能通过xml文件启动项目）</p>
+<h4 id="2、编译安装python3"><a href="#2、编译安装python3" class="headerlink" title="2、编译安装python3"></a>2、编译安装python3</h4><p>进入home路径（本人喜欢把东西都下载到这里）,执行以下命令：</p>
+<blockquote>
+<p>wget <a href="https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz" target="_blank" rel="external">https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz</a></p>
+</blockquote>
+<p>下载完成后，执行解压命令：</p>
+<blockquote>
+<p>tar -zxvf Python-3.6.3.tar.gz</p>
+</blockquote>
+<p>进入解压后的Python-3.6.3文件夹，依次执行以下命令</p>
+<blockquote>
+<p>./configure –prefix=/usr/local/python3</p>
+</blockquote>
+<p>将python3安装到/usr/local/python3/路径下</p>
+<blockquote>
+<p>make -j2<br>make install -j2<br>ln -s /usr/local/python3/bin/python3.6 /usr/bin/python3<br>ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3</p>
+</blockquote>
+<p>（以上两个ln命令是为了方便在终端中直接使用python3和pip3命令）</p>
+<h4 id="3、给python3安装django和uwsgi以及配置启动项目的xml文件"><a href="#3、给python3安装django和uwsgi以及配置启动项目的xml文件" class="headerlink" title="3、给python3安装django和uwsgi以及配置启动项目的xml文件"></a>3、给python3安装django和uwsgi以及配置启动项目的xml文件</h4><blockquote>
+<p>pip3 install django<br>pip3 install uwsgi</p>
+</blockquote>
+<p>为了在终端中使用uwsgi命令，执行以下命令</p>
+<blockquote>
+<p>ln -s /usr/local/python3/bin/uwsgi /usr/bin/uwsgi3</p>
+</blockquote>
+<p>将你的django项目放到你想放的路径下，例如/home/www/，假设我们的Django项目名为”myproject”,里面有一个应用叫”myapp”<br>在你的django项目下新建 myproject.xml，内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;uwsgi&gt;</div><div class="line">    &lt;socket&gt;127.0.0.1:8997&lt;/socket&gt;&lt;!-- 内部端口，自定义 --&gt;</div><div class="line">        &lt;chdir&gt;/home/www/myproject&lt;/chdir&gt;&lt;!-- 项目路径 --&gt;</div><div class="line">            &lt;module&gt;myproject.wsgi&lt;/module&gt;</div><div class="line">                &lt;processes&gt;4&lt;/processes&gt; &lt;!-- 进程数 --&gt; </div><div class="line">    &lt;daemonize&gt;uwsgi.log&lt;/daemonize&gt;&lt;!-- 日志文件 --&gt;</div><div class="line">&lt;/uwsgi&gt;</div></pre></td></tr></table></figure></p>
+<p>wq保存</p>
+<h4 id="4、安装nginx和配置nginx-conf文件"><a href="#4、安装nginx和配置nginx-conf文件" class="headerlink" title="4、安装nginx和配置nginx.conf文件"></a>4、安装nginx和配置nginx.conf文件</h4><p>进入home目录，执行以下命令：</p>
+<blockquote>
+<p>wget <a href="http://nginx.org/download/nginx-1.13.7.tar.gz" target="_blank" rel="external">http://nginx.org/download/nginx-1.13.7.tar.gz</a></p>
+</blockquote>
+<p>下载完成后，执行解压命令：</p>
+<blockquote>
+<p>tar -zxvf nginx-1.13.7.tar.gz</p>
+</blockquote>
+<p>进入解压后的nginx-1.13.7文件夹，依次执行以下命令：</p>
+<blockquote>
+<p>./configure<br>make<br>make install</p>
+</blockquote>
+<p>nginx一般默认安装好的路径为/usr/local/nginx<br>在/user/local/nginx/conf/中打开nginx.conf，加入以下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 8996; #暴露给外部访问的端口</div><div class="line">    server_name localhost;</div><div class="line">        charset utf-8;</div><div class="line">    location / &#123;</div><div class="line">        include uwsgi_params;</div><div class="line">        uwsgi_pass 127.0.0.1:8997; #外部访问8996就转发到内部8997</div><div class="line">    &#125;</div><div class="line">    location /static/ &#123;</div><div class="line">        alias /home/www/myproject/myapp/static/; #项目静态路径设置</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>（以上内容请保证在默认内容的大括号内）</p>
+<p>wq保存后进入/usr/local/nginx/sbin/目录<br>执行./nginx -t命令先检查配置文件是否有错，没有错就执行以下命令：<br>./nginx<br>终端没有任何提示就证明nginx启动成功，可以通过链接查看nginx是否启动成功:<br><a href="http://192.168.1.111" target="_blank" rel="external">http://192.168.1.111</a> （请将该ip替换成你的服务器ip）</p>
+<h4 id="5、访问项目页面"><a href="#5、访问项目页面" class="headerlink" title="5、访问项目页面"></a>5、访问项目页面</h4><p>进入你的django项目路径，执行以下命令：</p>
+<blockquote>
+<p>uwsgi3 -x myproject.xml</p>
+</blockquote>
+<p>以上步骤都没有出错的话，打开你的浏览器，输入以下链接，记得关闭系统防火墙或者开放8996端口<br><a href="http://192.168.1.111:8996" target="_blank" rel="external">http://192.168.1.111:8996</a> （请将该ip替换成你的服务器ip）<br>网站访问成功！</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2018/05/03/Django-deploy-aliyun/" class="archive-article-date">
+  	<time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2018-05-03</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Python3/">Python3</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/05/05/Django-deploy-Mysql/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          centos7上安装MySQL数据库
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/15/Django-aggregate-annotate/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python-django</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 16.67px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/爬虫豆瓣/" style="font-size: 10px;">爬虫豆瓣</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

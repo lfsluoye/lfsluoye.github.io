@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>python-django | 李甫帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="接触django已经很长时间了，但是使用QuerySet查询集的方式一直比较低端，只会使用filter/Q函数/exclude等方式来查询，数据量比较小的时候还可以，但是如果数据量很大，而且查询比较复杂，那么如果还是使用多个filter进行查询效率就会很低。就趁着清明放假的时间，跑来公司干点私活。输出成这篇文档，一是加深印象，提高熟练度；二是分享出来，造福大家~ 提高查询数据库效率的方案有两种：">
+<meta name="keywords" content="django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-django">
+<meta property="og:url" content="lfsluoye.github.io/2017/03/15/Django-aggregate-annotate/index.html">
+<meta property="og:site_name" content="李甫帅的博客">
+<meta property="og:description" content="接触django已经很长时间了，但是使用QuerySet查询集的方式一直比较低端，只会使用filter/Q函数/exclude等方式来查询，数据量比较小的时候还可以，但是如果数据量很大，而且查询比较复杂，那么如果还是使用多个filter进行查询效率就会很低。就趁着清明放假的时间，跑来公司干点私活。输出成这篇文档，一是加深印象，提高熟练度；二是分享出来，造福大家~ 提高查询数据库效率的方案有两种：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-06-05T07:43:05.379Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python-django">
+<meta name="twitter:description" content="接触django已经很长时间了，但是使用QuerySet查询集的方式一直比较低端，只会使用filter/Q函数/exclude等方式来查询，数据量比较小的时候还可以，但是如果数据量很大，而且查询比较复杂，那么如果还是使用多个filter进行查询效率就会很低。就趁着清明放假的时间，跑来公司干点私活。输出成这篇文档，一是加深印象，提高熟练度；二是分享出来，造福大家~ 提高查询数据库效率的方案有两种：">
+  
+    <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <script src="/style.js"></script>
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">李甫帅</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/Suibi">随笔</a></li>
+	        
+				<li><a href="/categories/iOS">iOS</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+		        
+					<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">李甫帅</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="/assets/blogImg/lfsluoye.png" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">李甫帅</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">天道酬勤,想成功,唯一法,坚持尔</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/categories/Suibi">随笔</a></li>
+		        
+					<li><a href="/categories/iOS">iOS</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lfsluoye" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2632170711" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-Django-aggregate-annotate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python-django
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>接触django已经很长时间了，但是使用QuerySet查询集的方式一直比较低端，只会使用filter/Q函数/exclude等方式来查询，数据量比较小的时候还可以，但是如果数据量很大，而且查询比较复杂，那么如果还是使用多个filter进行查询效率就会很低。就趁着清明放假的时间，跑来公司干点私活。输出成这篇文档，一是加深印象，提高熟练度；二是分享出来，造福大家~</p>
+<p>提高查询数据库效率的方案有两种：</p>
+<p>第一种，是使用原生的SQL语句来进行查询，这样的优点在于能够完全按照开发者的意图来执行，效率会很高，但是缺点也很明显：1.开发者需要非常熟悉SQL语句，加大开发者的工作量，同时，夹杂着SQL的项目也不利于以后程序的维护，增大程序的耦合度。2.若查询条件是动态变化的，则会使开发变得更加困难。</p>
+<p>django为了解决这一难题，提供了aggregate(聚合函数)和annotate(在aggregate的基础上进行GROUP BY操作)。<br><a id="more"></a><br>下面，就来介绍第二种方法。</p>
+<h2 id="一-aggregate的使用方法"><a href="#一-aggregate的使用方法" class="headerlink" title="一. aggregate的使用方法"></a>一. aggregate的使用方法</h2><p>今天在同事的指点下，仔细看了django中annotate的使用方法，会根据查询条件来动态生成SQL语句，提高组合查询的效率。</p>
+<p>理解aggregate的关键在于理解SQL中的聚合函数：以下摘自百度百科：SQL基本函数，聚合函数对一组值执行计算，并返回单个值。除了 COUNT 以外，聚合函数都会忽略空值。 常见的聚合函数有AVG / COUNT / MAX / MIN /SUM 等。</p>
+<p>aggregate就是在django中实现聚合函数的。先来看aggregate的使用场景：在项目中有时候你想要从数据库中取出一个汇总的集合。我们使用django官方的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">from django.db import models</div><div class="line"></div><div class="line">class Author(models.Model):</div><div class="line">    name = models.CharField(max_length=100)</div><div class="line">    age = models.IntegerField()</div><div class="line"></div><div class="line">class Publisher(models.Model):</div><div class="line">    name = models.CharField(max_length=300)</div><div class="line">    num_awards = models.IntegerField()</div><div class="line"></div><div class="line">class Book(models.Model):</div><div class="line">    name = models.CharField(max_length=300)</div><div class="line">    pages = models.IntegerField()</div><div class="line">    price = models.DecimalField(max_digits=10, decimal_places=2)</div><div class="line">    rating = models.FloatField()</div><div class="line">    authors = models.ManyToManyField(Author)</div><div class="line">    publisher = models.ForeignKey(Publisher)</div><div class="line">    pubdate = models.DateField()</div><div class="line"></div><div class="line">class Store(models.Model):</div><div class="line">    name = models.CharField(max_length=300)</div><div class="line">    books = models.ManyToManyField(Book)</div><div class="line">    registered_users = models.PositiveIntegerField()</div></pre></td></tr></table></figure></p>
+<p>如果我们使用aggregate来进行计数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; from django.db.models import Count</div><div class="line">&gt;&gt;&gt; pubs = Publisher.objects.aggregate(num_books=Count(&apos;book&apos;))</div><div class="line">&gt;&gt;&gt; pubs</div><div class="line">&#123;&apos;num_books&apos;: 27&#125;</div></pre></td></tr></table></figure></p>
+<p>而且aggregate不单单可以求和，还可以求平均Avg，最大最小等等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; from django.db.models import Avg</div><div class="line">&gt;&gt;&gt; Book.objects.all().aggregate(Avg(&apos;price&apos;))</div><div class="line">&#123;&apos;price__avg&apos;: 34.35&#125;</div><div class="line"></div><div class="line"># Cost per page  输出的名字同样可以指定，比如price_per_page</div><div class="line">&gt;&gt;&gt; from django.db.models import F, FloatField, Sum</div><div class="line">&gt;&gt;&gt; Book.objects.all().aggregate(</div><div class="line">... price_per_page=Sum(F(&apos;price&apos;)/F(&apos;pages&apos;), output_field=FloatField()))</div><div class="line">&#123;&apos;price_per_page&apos;: 0.4470664529184653&#125;</div></pre></td></tr></table></figure></p>
+<p>通过上面的介绍，我们可以知道，aggregate的逻辑比较简单，应用场景比较窄，如果你想要对数据进行分组（GROUP BY）后再聚合的操作，则需要使用annotate来实现。</p>
+<h2 id="二-annotate的使用方法"><a href="#二-annotate的使用方法" class="headerlink" title="二. annotate的使用方法"></a>二. annotate的使用方法</h2><p>首先，假设有这么一个models:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># python:2.7.9</div><div class="line"># django:1.7.8</div><div class="line"></div><div class="line">class MessageTab(models.Model):</div><div class="line">    msg_sn = models.CharField(max_lenth=20, verbose_name=u&apos;编号&apos;)</div><div class="line">    msg_name = models.CharField(max_length=50, verbose_name=u&apos;消息名称&apos;)</div><div class="line">    message_time = models.DateTimeField(verbose_name=u&apos;消息出现时间&apos;)</div><div class="line">    msg_status = models.CharField(max_length=50, default=&apos;未处理&apos;, verbose_name=u&apos;消息状态&apos;)</div><div class="line">    class Meta:</div><div class="line">        db_table = &apos;message_tab&apos;</div></pre></td></tr></table></figure></p>
+<p>如果在开发过程中，有这么一个需求：查询各个消息状态的数量。那么我们经常会使用filter(…).count(…)来进行查询。现在我们可以使用：</p>
+<blockquote>
+<p>msgS = MessageTab.objects.values_list(‘msg_status’).annotate(Count(‘id’))</p>
+</blockquote>
+<p>其中，id为数据库自动生成的自增字段。values_list的用法自行Google，或者print出来看一看。<br>此时，数据库实际执行的代码，可以通过：</p>
+<blockquote>
+<p>print msgS.query</p>
+</blockquote>
+<p>打印出来。可以看到：</p>
+<blockquote>
+<p>SELECT <code>message_tab</code>.<code>msg_status</code>, COUNT(<code>message_tab</code>.<code>id</code>) AS <code>id__count</code> FROM <code>message_tab</code> GROUP BY <code>message_tab</code>.<code>msg_status</code> ORDER BY NULL</p>
+</blockquote>
+<p>很直观明了。通过msg_status来进行group by。如果想自定义id__count，比如指定为msg_num，则可以使用：annotate(msg_num=Count(‘id’))</p>
+<p>当存在多个查询条件时，比如查询最近7天内，message_name属于某个分组内的消息，则可以使用Q函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">date_end = now().date() + timedelta(days=1)</div><div class="line">    date_start = date_end - timedelta(days=7)</div><div class="line">    messageTimeRange = (date_start, date_end)</div><div class="line">    GroupList = getGroupIdLis(request.user)  # 返回当前用户能查询的group的一个列表。。仅做参考用</div><div class="line">    qQueryList = [Q(message_time__range=messageTimeRange), Q(message_name__in=GroupList)] # 可以有多个Q函数查询条件</div><div class="line"></div><div class="line">    msgS = MessageTab.objects.filter(reduce(operator.and_, qQueryList)).values_list(&apos;msg_status&apos;).annotate(msg_num=Count(&apos;id&apos;))</div></pre></td></tr></table></figure>
+<p>再次调用print msgS.query可看到SQL语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SELECT `message_tab`.`msg_status`, COUNT(`message_tab`.`id`) AS `msg_num` FROM `message_tab` WHERE (`message_tab`.`message_time` BETWEEN 2017-03-27 00:00:00 AND 2017-04-03 00:00:00 AND `message_tab`.`message_name` IN (1785785, 78757, 285889, 2727333, 7272957, 786767)) GROUP BY `message_tab`.`msg_status` ORDER BY NULL</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/03/15/Django-aggregate-annotate/" class="archive-article-date">
+  	<time datetime="2017-03-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-03-15</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Python3/">Python3</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/05/03/Django-deploy-aliyun/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          部署django在阿里云上的服务器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/23/Django-fieldTypes/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python-django</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 李甫帅
+    	</div>
+      	<div class="footer-right">
+      		<a>Hexo</a> Theme <a>Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/"
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 16.67px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/爬虫豆瓣/" style="font-size: 10px;">爬虫豆瓣</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">李甫帅 &lt;br&gt;14年开始从事ios开发&lt;br/&gt;目前就职于北京建科研软件有限公司.</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

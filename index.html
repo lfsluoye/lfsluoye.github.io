@@ -142,6 +142,369 @@
       <div class="body-wrap">
         
   
+    <article id="post-python-Crawler" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/15/python-Crawler/">python-爬虫</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="开始创建项目"><a href="#开始创建项目" class="headerlink" title="开始创建项目"></a>开始创建项目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy startproject douban</div></pre></td></tr></table></figure>
+<h4 id="添加要爬取的网站"><a href="#添加要爬取的网站" class="headerlink" title="添加要爬取的网站"></a>添加要爬取的网站</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy genspider douban_spider movie.douban.com</div></pre></td></tr></table></figure>
+<h4 id="开始爬取"><a href="#开始爬取" class="headerlink" title="开始爬取"></a>开始爬取</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy crawl douban_spider</div></pre></td></tr></table></figure>
+<h4 id="数据的存储"><a href="#数据的存储" class="headerlink" title="数据的存储"></a>数据的存储</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scrapy crawl douban_spider -o text.json</div><div class="line">scrapy crawl douban_spider -o text.csv</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2019/01/15/python-Crawler/" class="archive-article-date">
+  	<time datetime="2019-01-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2019-01-15</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫豆瓣/">爬虫豆瓣</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Python3/">Python3</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-DB-trigger" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/08/DB-trigger/">触发器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="创建触发器语法"><a href="#创建触发器语法" class="headerlink" title="创建触发器语法"></a>创建触发器语法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">DELIMITER // #改变结束符号</div><div class="line">create trigger triggerName</div><div class="line">after/before insert/update/delete on 表名</div><div class="line">for each row #这句话是固定的</div><div class="line">BEGIN</div><div class="line">sql语句</div><div class="line">END</div><div class="line">DELIMITER ;</div></pre></td></tr></table></figure>
+        <p class="article-more-link">
+          <a  href="/2018/05/08/DB-trigger/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2018/05/08/DB-trigger/" class="archive-article-date">
+  	<time datetime="2018-05-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2018-05-08</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Python3/">Python3</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Django-deploy-Mysql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/05/Django-deploy-Mysql/">centos7上安装MySQL数据库</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="在-CentOS7-上安装-MySQL5-7"><a href="#在-CentOS7-上安装-MySQL5-7" class="headerlink" title="在 CentOS7 上安装 MySQL5.7"></a>在 CentOS7 上安装 MySQL5.7</h3><ol>
+<li>通过 SecureCRT 连接到阿里云 CentOS7 服务器；</li>
+<li>进入到目录 /usr/local/ 中：<br>cd /usr/local/</li>
+<li>创建目录 /usr/local/tools，如果有则忽略：<br>mkdir -p tools</li>
+<li>创建 /usr/local/mysql 目录，如果已存在则忽略：<br>mkdir -p mysql</li>
+<li>进入到目录 /usr/local/tools 中：<br>cd tools/</li>
+<li>查看系统中是否已安装 MySQL 服务：<br>rpm -qa | grep mysql<br>或<br>yum list installed | grep mysql
+        <p class="article-more-link">
+          <a  href="/2018/05/05/Django-deploy-Mysql/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2018/05/05/Django-deploy-Mysql/" class="archive-article-date">
+  	<time datetime="2018-05-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2018-05-05</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Python3/">Python3</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Django-deploy-aliyun" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/03/Django-deploy-aliyun/">部署django在阿里云上的服务器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="centos7下部署Django（nginx-uwsgi-python3-django"><a href="#centos7下部署Django（nginx-uwsgi-python3-django" class="headerlink" title="centos7下部署Django（nginx+uwsgi+python3+django)"></a>centos7下部署Django（nginx+uwsgi+python3+django)</h2><p>系统版本<br>centos7</p>
+<p>python版本<br>3.6.3</p>
+<p>django版本<br>1.11</p>
+<p>uwsgi版本<br>2.0.15</p>
+<p>nginx版本<br>1.13.10<br>
+        <p class="article-more-link">
+          <a  href="/2018/05/03/Django-deploy-aliyun/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2018/05/03/Django-deploy-aliyun/" class="archive-article-date">
+  	<time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2018-05-03</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Python3/">Python3</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Django-aggregate-annotate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/15/Django-aggregate-annotate/">python-django</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>接触django已经很长时间了，但是使用QuerySet查询集的方式一直比较低端，只会使用filter/Q函数/exclude等方式来查询，数据量比较小的时候还可以，但是如果数据量很大，而且查询比较复杂，那么如果还是使用多个filter进行查询效率就会很低。就趁着清明放假的时间，跑来公司干点私活。输出成这篇文档，一是加深印象，提高熟练度；二是分享出来，造福大家~</p>
+<p>提高查询数据库效率的方案有两种：</p>
+<p>第一种，是使用原生的SQL语句来进行查询，这样的优点在于能够完全按照开发者的意图来执行，效率会很高，但是缺点也很明显：1.开发者需要非常熟悉SQL语句，加大开发者的工作量，同时，夹杂着SQL的项目也不利于以后程序的维护，增大程序的耦合度。2.若查询条件是动态变化的，则会使开发变得更加困难。</p>
+<p>django为了解决这一难题，提供了aggregate(聚合函数)和annotate(在aggregate的基础上进行GROUP BY操作)。<br>
+        <p class="article-more-link">
+          <a  href="/2017/03/15/Django-aggregate-annotate/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/03/15/Django-aggregate-annotate/" class="archive-article-date">
+  	<time datetime="2017-03-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-03-15</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Python3/">Python3</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Django-fieldTypes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/23/Django-fieldTypes/">python-django</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="常见的field类型："><a href="#常见的field类型：" class="headerlink" title="常见的field类型："></a>常见的field类型：</h4><ol>
+<li><p>AutoField 自增字段，它是一个根据ID自增长的IntegerField字段，通常不用自己设置，如果没有设置主键，django会自动添加它为主键字段</p>
+</li>
+<li><p>CharField(max_length=none[, **options]) 一个字符串字段，必须有一个最大长度的参数，它作用于数据库层级和django数据验证层级。 django的管理后台用 单行输入框来表示它。</p>
+</li>
+<li><p>CommaSeparatedIntegerField（max_length=none[, **options]） 用来存放以逗号间隔的整数序列，有必须的最大长度属性，考虑到数据库的移植性，max_length参数应该必选。</p>
+</li>
+<li>DateField([auto_now=False, auto_now_add=False, **options]) 该字段利用python的datetime.date实例来表示日期，第一次保存对象时候，有auto_now参数自动保存当前时间，一般用来表示最后修改时间， auto_now_add在第一次创建对象时候django将该字段值自动设置为当前时间，用来表示对象创建时间。 django管理后台使用一个带有javascript日历的 来表示该字段，带有一个当前日期的快捷选择。
+        <p class="article-more-link">
+          <a  href="/2017/02/23/Django-fieldTypes/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/02/23/Django-fieldTypes/" class="archive-article-date">
+  	<time datetime="2017-02-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-02-23</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Python3/">Python3</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-iOS-Command" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -235,14 +598,13 @@
         <h3 id="django-入门和实践"><a href="#django-入门和实践" class="headerlink" title="django 入门和实践"></a>django 入门和实践</h3><ol>
 <li>创建项目<br>django-admin startproject 项目名</li>
 <li>创建应用<br>python3 manage.py startapp 应用名<br>添加应用名到settings.py中的INSTALLED_APPS里</li>
-<li>创建数据表和迁移<br>python3 manage.py makemigrations<br>python3 manage.py migrate<br>4 创建后台管理系统<br>python3 manage.py createsuperuser</li>
-</ol>
-<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><blockquote>
-<ul>
-<li>python3 manage.py runserver</li>
-</ul>
-</blockquote>
-
+<li>创建数据表和迁移生成静态文件<br>python3 manage.py makemigrations –empty 你的应用名 (失败时)<br>python3 manage.py makemigrations<br>python3 manage.py migrate<br>python3 manage.py collectstatic</li>
+<li><p>创建后台管理系统<br>python3 manage.py createsuperuser</p>
+</li>
+<li><p>阿里云远程连接密码:627443</p>
+        <p class="article-more-link">
+          <a  href="/2016/12/23/python-django/#more">more >></a>
+        </p>
       
     </div>
     <div class="article-info article-info-index">
@@ -397,348 +759,6 @@
 
 
   
-    <article id="post-iOS-Xcode8ProblemCollect" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/14/iOS-Xcode8ProblemCollect/">Xcode8问题收集</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="问题一-打开相册报错"><a href="#问题一-打开相册报错" class="headerlink" title="问题一 打开相册报错"></a>问题一 打开相册报错</h3><p>今天Xcode8 更新了,打开相册，在调用发生了崩溃现象，一开始以为是巧合，但尝试了第二次之后，似乎意识到确实出了问题，从而关注控制台，这个时候就注意到了这句Xcode给我们的忠告:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[access] </div><div class="line">This app has crashed because it attempted to access privacy-sensitive data without a usage description.  </div><div class="line">The app&apos;s Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data.</div></pre></td></tr></table></figure></p>
-        <p class="article-more-link">
-          <a  href="/2016/09/14/iOS-Xcode8ProblemCollect/#more">more >></a>
-        </p>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/09/14/iOS-Xcode8ProblemCollect/" class="archive-article-date">
-  	<time datetime="2016-09-13T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-14</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xcode8/">Xcode8</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/iOS/">iOS</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-iOS-addChildViewController" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/23/iOS-addChildViewController/">iOS addChildViewController方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>APP中经常有根据标签来切换页面的需求，如果切换的页面只是刷新一下数据也就罢了，但是如果每个标签切换页面的数据和内容、结构完全不同你会怎么样做？<br><strong>个人觉得理想的做法就是每个标签展示的内容为一个View，这样切换既不会影响之前View还可以快速切回之前的View，而且符合高聚合、低耦合开发啊，这里就要隆重介绍一下addChildViewController方法：</strong><br>
-        <p class="article-more-link">
-          <a  href="/2016/08/23/iOS-addChildViewController/#more">more >></a>
-        </p>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/08/23/iOS-addChildViewController/" class="archive-article-date">
-  	<time datetime="2016-08-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-08-23</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/iOS/">iOS</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-iOS-IDCode" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/11/iOS-IDCode/">iOS开发--搞定烦躁的验证码</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我们开发的app里面几乎都有登陆注册系统，这时候就少不了验证码的发挥了。每次都得写这些重复的代码，没有营养又不得不写。今天下班时间，将验证码这一功能封装一下。<br>准备：Mob – SDK<br>我们公司采用的短信验证系统时候Mob的SDK。<br>所以下面代码出现的网络请求都是Mob SDK 中的方法。<br>首先看下Mob 给的代码示例：<br>
-        <p class="article-more-link">
-          <a  href="/2016/07/11/iOS-IDCode/#more">more >></a>
-        </p>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/07/11/iOS-IDCode/" class="archive-article-date">
-  	<time datetime="2016-07-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-07-11</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/iOS/">iOS</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-iOS-Shuiyin" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/05/iOS-Shuiyin/">iOS实现刮刮乐功能与图片添加水印功能</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>代码简单直接上代码<br><strong>1.创建子视图</strong><br>
-        <p class="article-more-link">
-          <a  href="/2016/07/05/iOS-Shuiyin/#more">more >></a>
-        </p>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/07/05/iOS-Shuiyin/" class="archive-article-date">
-  	<time datetime="2016-07-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-07-05</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/iOS/">iOS</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-iOS-cleanTheCache" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/23/iOS-cleanTheCache/">iOS 清理缓存</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>大家伙都知道，随着手机使用时间的越来越长，产生的垃圾也就会越来越多，从而会影响手机系统性能和手机运行的流畅度。这时，我们就需要清理手机里的垃圾，而这些垃圾大部分都是一些缓存的一些数据。所谓缓存就是系统在运行应用软件时把一些暂时不需要调用的数据写进缓存区，当应用软件被关闭后这些被写进缓存区的数据可能不会被清理，它们仍然会驻留在缓存区中，此时为了将存储区空出来就需要清除缓存。<br>　　以上是本人对于缓存的一些基本理解，接下来才是我今天所要说的缓存清理——如何在代码中清理沙盒里的缓存。首先，介绍下沙盒内各目录如何获取；其次，介绍如何获取缓存文件大小以及缓存清理。<br>
-        <p class="article-more-link">
-          <a  href="/2016/06/23/iOS-cleanTheCache/#more">more >></a>
-        </p>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/06/23/iOS-cleanTheCache/" class="archive-article-date">
-  	<time datetime="2016-06-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-06-23</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/iOS/">iOS</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-iOS-navDeleteLine" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/12/iOS-navDeleteLine/">iOS去除导航栏和tabbar的1px横线</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="1-在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了"><a href="#1-在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了" class="headerlink" title="1.在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了"></a>1.在自己定义的导航栏中或者设计稿中经常需要去除导航栏的1px横线，主要是颜色太不协调了</h4><p><img src="/assets/blogImg/去除前导航栏.png" alt="去除前导航栏"><br>要去除这1px的横线，首先应该知道它是什么，在Xcode的界面调试中可以看到，它其实是UIImageView来的<br>
-        <p class="article-more-link">
-          <a  href="/2016/05/12/iOS-navDeleteLine/#more">more >></a>
-        </p>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/05/12/iOS-navDeleteLine/" class="archive-article-date">
-  	<time datetime="2016-05-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-05-12</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/iOS/">iOS</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -751,7 +771,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 李甫帅
+    		&copy; 2019 李甫帅
     	</div>
       	<div class="footer-right">
       		<a>Hexo</a> Theme <a>Yilia</a> by Litten
@@ -801,7 +821,7 @@
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 16.67px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/爬虫豆瓣/" style="font-size: 10px;">爬虫豆瓣</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     			</div>
     	</section>
     

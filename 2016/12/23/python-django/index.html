@@ -6,18 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>python-django | 李甫帅的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="django 入门和实践 创建项目django-admin startproject 项目名 创建应用python3 manage.py startapp 应用名添加应用名到settings.py中的INSTALLED_APPS里 创建数据表和迁移python3 manage.py makemigrationspython3 manage.py migrate4 创建后台管理系统python3 m">
+  <meta name="description" content="django 入门和实践 创建项目django-admin startproject 项目名 创建应用python3 manage.py startapp 应用名添加应用名到settings.py中的INSTALLED_APPS里 创建数据表和迁移生成静态文件python3 manage.py makemigrations –empty 你的应用名 (失败时)python3 manage.py m">
 <meta name="keywords" content="django">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python-django">
 <meta property="og:url" content="lfsluoye.github.io/2016/12/23/python-django/index.html">
 <meta property="og:site_name" content="李甫帅的博客">
-<meta property="og:description" content="django 入门和实践 创建项目django-admin startproject 项目名 创建应用python3 manage.py startapp 应用名添加应用名到settings.py中的INSTALLED_APPS里 创建数据表和迁移python3 manage.py makemigrationspython3 manage.py migrate4 创建后台管理系统python3 m">
+<meta property="og:description" content="django 入门和实践 创建项目django-admin startproject 项目名 创建应用python3 manage.py startapp 应用名添加应用名到settings.py中的INSTALLED_APPS里 创建数据表和迁移生成静态文件python3 manage.py makemigrations –empty 你的应用名 (失败时)python3 manage.py m">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-11-03T14:42:17.000Z">
+<meta property="og:updated_time" content="2018-06-05T07:02:59.463Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python-django">
-<meta name="twitter:description" content="django 入门和实践 创建项目django-admin startproject 项目名 创建应用python3 manage.py startapp 应用名添加应用名到settings.py中的INSTALLED_APPS里 创建数据表和迁移python3 manage.py makemigrationspython3 manage.py migrate4 创建后台管理系统python3 m">
+<meta name="twitter:description" content="django 入门和实践 创建项目django-admin startproject 项目名 创建应用python3 manage.py startapp 应用名添加应用名到settings.py中的INSTALLED_APPS里 创建数据表和迁移生成静态文件python3 manage.py makemigrations –empty 你的应用名 (失败时)python3 manage.py m">
   
     <link rel="alternative" href="/atom.xml" title="李甫帅的博客" type="application/atom+xml">
   
@@ -163,13 +163,31 @@
         <h3 id="django-入门和实践"><a href="#django-入门和实践" class="headerlink" title="django 入门和实践"></a>django 入门和实践</h3><ol>
 <li>创建项目<br>django-admin startproject 项目名</li>
 <li>创建应用<br>python3 manage.py startapp 应用名<br>添加应用名到settings.py中的INSTALLED_APPS里</li>
-<li>创建数据表和迁移<br>python3 manage.py makemigrations<br>python3 manage.py migrate<br>4 创建后台管理系统<br>python3 manage.py createsuperuser</li>
-</ol>
+<li>创建数据表和迁移生成静态文件<br>python3 manage.py makemigrations –empty 你的应用名 (失败时)<br>python3 manage.py makemigrations<br>python3 manage.py migrate<br>python3 manage.py collectstatic</li>
+<li><p>创建后台管理系统<br>python3 manage.py createsuperuser</p>
+</li>
+<li><p>阿里云远程连接密码:627443</p>
+<a id="more"></a>
 <h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><blockquote>
 <ul>
 <li>python3 manage.py runserver</li>
+<li>cd /usr/local/nginx/conf/</li>
+<li>cd /usr/local/nginx/sbin/</li>
+<li>./nginx -t</li>
+<li>./nginx</li>
+<li>cd /home/www/codetimeproject/</li>
+<li>uwsgi3 -x codetimeproject.xml</li>
+<li>uwsgi3 –reload codetimeproject.xml</li>
+<li>python3 manage.py collectstatic </li>
+<li>mysql -uroot -p</li>
+<li>uwsgi3 –ini uwsgi_codetime.ini&amp;/usr/local/nginx/sbin/nginx<br>#####启动MySQL服务</li>
+<li>systemctl start mysqld<br>#####查看MySQL服务</li>
+<li>systemctl status mysqld.service<h4 id="查看所有端口"><a href="#查看所有端口" class="headerlink" title="查看所有端口"></a>查看所有端口</h4></li>
+<li>netstat -ntlp</li>
 </ul>
 </blockquote>
+</li>
+</ol>
 
       
     </div>
@@ -250,7 +268,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 李甫帅
+    		&copy; 2019 李甫帅
     	</div>
       	<div class="footer-right">
       		<a>Hexo</a> Theme <a>Yilia</a> by Litten
@@ -300,7 +318,7 @@
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 16.67px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/爬虫豆瓣/" style="font-size: 10px;">爬虫豆瓣</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     			</div>
     	</section>
     

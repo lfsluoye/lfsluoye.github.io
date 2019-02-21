@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="李甫帅的博客">
 <meta property="og:description" content="允许任何来源sudo spctl –master-disable brew的命令行 软件的安装: brew install 软件的搜索: brew search 软件的信息: brew info 软件的卸载: brew uninstall  brew的扩充 brew install caskroom/cask/brew-cask 软件安装: brew cask install 软件卸载: brew">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-11-16T12:59:10.000Z">
+<meta property="og:updated_time" content="2018-06-05T06:57:41.203Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用命令">
 <meta name="twitter:description" content="允许任何来源sudo spctl –master-disable brew的命令行 软件的安装: brew install 软件的搜索: brew search 软件的信息: brew info 软件的卸载: brew uninstall  brew的扩充 brew install caskroom/cask/brew-cask 软件安装: brew cask install 软件卸载: brew">
@@ -222,17 +222,29 @@
 <blockquote>
 <p>git branch -d dev</p>
 </blockquote>
+<p>删除远程分支</p>
+<blockquote>
+<p>git push origin :branch-name  </p>
+</blockquote>
 <p>合并分支</p>
 <blockquote>
 <p>git merge –no-ff -m “merge with no-ff” dev</p>
 </blockquote>
 <p>放弃所有修改</p>
 <blockquote>
-<p>git clean -xdf</p>
+<p>git checkout .</p>
 </blockquote>
 <p>推送tag</p>
 <blockquote>
 <p>git push origin [tagname]</p>
+</blockquote>
+<p>忽略已经提交到服务器的文件</p>
+<blockquote>
+<p>git rm –cached filename</p>
+</blockquote>
+<p>忽略已经提交到服务器的文件夹</p>
+<blockquote>
+<p>git rm –cached -r </p>
 </blockquote>
 
       
@@ -262,6 +274,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/02/23/Django-fieldTypes/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          python-django
+        
+      </div>
+    </a>
   
   
     <a href="/2016/12/23/python-django/" id="article-nav-older" class="article-nav-link-wrap">
@@ -305,7 +326,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 李甫帅
+    		&copy; 2019 李甫帅
     	</div>
       	<div class="footer-right">
       		<a>Hexo</a> Theme <a>Yilia</a> by Litten
@@ -355,7 +376,7 @@
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 16.67px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/爬虫豆瓣/" style="font-size: 10px;">爬虫豆瓣</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     			</div>
     	</section>
     

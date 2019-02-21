@@ -142,6 +142,364 @@
       <div class="body-wrap">
         
   
+    <article id="post-iOS-PictureCarousel" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/05/iOS-PictureCarousel/">iOS小Demo--图片无限轮播</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网上已经有很多无限循环的小Demo,这里我把感觉还不错的做了整理,不多说直接上代码.<br>
+        <p class="article-more-link">
+          <a  href="/2015/12/05/iOS-PictureCarousel/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2015/12/05/iOS-PictureCarousel/" class="archive-article-date">
+  	<time datetime="2015-12-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-12-05</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS-WKWebView" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/18/iOS-WKWebView/">使用WKWebView替换UIWebView</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>开发App的过程中，常常会遇到在App内部加载网页，通常用UIWebView加载。这个自iOS2开始使用的网页加载器一直是开发的心病：加载速度慢，占用内存多，优化困难。如果加载网页多，还可能因为过量占用内存而给系统kill掉。各种优化的方法效果也不那么明显。</p>
+</blockquote>
+<p>iOS8以后，苹果推出了新框架Wekkit，提供了替换UIWebView的组件WKWebView。各种UIWebView的问题没有了，速度更快了，占用内存少了，一句话，WKWebView是App内部加载网页的最佳选择！</p>
+<p>先看下 WKWebView的特性：</p>
+<blockquote>
+<ul>
+<li>在性能、稳定性、功能方面有很大提升（最直观的体现就是加载网页是占用的内存，模拟器加载百度与开源中国网站时，WKWebView占用23M，而UIWebView占用85M）</li>
+<li>允许JavaScript的Nitro库加载并使用（UIWebView中限制）</li>
+<li>支持了更多的HTML5特性</li>
+<li>高达60fps的滚动刷新率以及内置手势</li>
+<li>将UIWebViewDelegate与UIWebView重构成了14类与3个协议
+        <p class="article-more-link">
+          <a  href="/2015/11/18/iOS-WKWebView/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2015/11/18/iOS-WKWebView/" class="archive-article-date">
+  	<time datetime="2015-11-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-11-18</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swift/">Swift</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS-Objective-CHybridSwift" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/08/iOS-Objective-CHybridSwift/">Objective-C 与 Swift 混用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Swift 的学习已经提上日程，目前先在 Objective-C 的工程中试验，逐步重构。</p>
+<p>入门自然先从官方文档和 WWDC 视频着手，<a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_78" target="_blank" rel="external">Mix Objective-C and Swift</a> 给出了详实的内容，但却是一个糟糕的实践指导，而 WWDC 视频中也缺乏细节部分。<br>
+        <p class="article-more-link">
+          <a  href="/2015/06/08/iOS-Objective-CHybridSwift/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2015/06/08/iOS-Objective-CHybridSwift/" class="archive-article-date">
+  	<time datetime="2015-06-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-06-08</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-BlogWebsite" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/05/BlogWebsite/">常用博客网址</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>英文系列</p>
+<p>网站</p>
+<p>Raywenderlich.com<br>这个不多说了吧，iOS界的百科全书。iOS By tutorial系列书从iOS7到8全买的正版别说499刀了，999刀也入手。</p>
+<p>objc.io<br>这个也不用多说了，Raywenderlich是百科全书的话，这个就是深入深入再深入。<br>
+        <p class="article-more-link">
+          <a  href="/2015/05/05/BlogWebsite/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2015/05/05/BlogWebsite/" class="archive-article-date">
+  	<time datetime="2015-05-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-05-05</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/博客网址/">博客网址</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/Suibi/">随笔</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS-QrCode" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/30/iOS-QrCode/">iOS二维码生成(带logo)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>制作一个中心带有logo的二维码<br>
+        <p class="article-more-link">
+          <a  href="/2015/03/30/iOS-QrCode/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2015/03/30/iOS-QrCode/" class="archive-article-date">
+  	<time datetime="2015-03-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-03-30</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS-textViewAutolayoutHeight" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/25/iOS-textViewAutolayoutHeight/">iOS-textView文本换行高度自动适应</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于开发中需要需要个类似QQ空间的一个评论功能,首先要做的输入框肯定是会换行的,因为iOS中(TextField)是单行组件,所以只能使用(TextView)这个多行组件了,可是在不做处理的情况下这个组件的文字在换行的时候会顶出输入框</p>
+<p>解决思路:<br>
+        <p class="article-more-link">
+          <a  href="/2015/01/25/iOS-textViewAutolayoutHeight/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2015/01/25/iOS-textViewAutolayoutHeight/" class="archive-article-date">
+  	<time datetime="2015-01-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-01-25</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OC/">OC</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-price-tags"></i>
+	<a class="article-category-link" href="/categories/iOS/">iOS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-iOS-customControl-ios" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -328,7 +686,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 李甫帅
+    		&copy; 2019 李甫帅
     	</div>
       	<div class="footer-right">
       		<a>Hexo</a> Theme <a>Yilia</a> by Litten
@@ -378,7 +736,7 @@
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    				<a href="/tags/OC/" style="font-size: 20px;">OC</a> <a href="/tags/Swift/" style="font-size: 13.33px;">Swift</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/django/" style="font-size: 16.67px;">django</a> <a href="/tags/博客网址/" style="font-size: 10px;">博客网址</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/爬虫豆瓣/" style="font-size: 10px;">爬虫豆瓣</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     			</div>
     	</section>
     
